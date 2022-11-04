@@ -22,7 +22,8 @@ This section wil cover how to setup the project and get it running within your s
 9. [Seed the database](#seed-the-database)
 
 ### Clone the repo 
-
+1. Click the green button within the repo named "Code" as shown in the image below 
+![alt text](https://imgur.com/a/0sTobVu)
 
 ### Install PHP dependencies 
 
