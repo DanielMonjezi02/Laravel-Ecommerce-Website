@@ -1,3 +1,10 @@
+# Table Of Contents
+
+* [About Project](#about-project)
+* [Getting Started](#getting-started)
+* [Known Issues](#known-issues)
+
+
 # About Project
 
 This project is based on a basic shopping website which has been created with the use of HTML, Laravel and CRUD operations. The website contains the following functions:
@@ -6,6 +13,7 @@ This project is based on a basic shopping website which has been created with th
 * Homepage
 * Products View Page (Allows the user to add the product to cart as well as edit the description of the product which will make changes within the database)
 * Cart View Page (Allows the user to delete the product from cart as well as view the product)
+
 
 ## Getting Started 
 
@@ -58,18 +66,18 @@ This section wil cover how to setup the project and get it running within your s
 ### Edit .env.example file
 1. Open the project within your chosen code editor
 2. Locate a file named `.env.example` which should be at the bottom of your file explorer section 
-3. Change the following section as shown below to match your database details
+3. Change the following section as shown below to match your database details:
 
 ![](https://i.imgur.com/glSiD30.png)
 
 
 ### Migrate the database
 1. Please ensure your MySQL module is running
-2. Open git-bash terminal, change the root to the project and enter the following command: ``php artisan migrate`` - You should see a list of a few tables
+2. Open git-bash terminal, change the root to the project and enter the following command: ``php artisan migrate`` - You should see a list of tables being displayed
 3. Keep the terminal open and [seed the database](#seed-the-database)
 
 ### Seed the database 
-1. You should already have completed the [migrate database](#migrate-the-database) section and therefore should still have the termianl open - If you do not, please refer back to the steps
+1. You should already have completed the [migrate database](#migrate-the-database) section and therefore should still have the terminal open - If you do not, please refer back to the steps
 2. Enter the following command: ``php artisan db:seed``
 3. This is the last section and you should now be able to view the website along with the correct front end assets by visiting: http://localhost/ while ensuring both apache and mysql module's are running 
 
