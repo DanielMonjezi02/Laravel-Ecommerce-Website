@@ -23,7 +23,7 @@ This section wil cover how to setup the project and get it running within your s
 
 ### Clone the repo 
 1. Click the green button within the repo named "Code" as shown in the image below 
-!(image)[https://imgur.com/a/0sTobVu]
+![Imgur Image](https://i.imgur.com/a/duheSKM)
 
 ### Install PHP dependencies 
 
