@@ -1,0 +1,97 @@
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+.header
+{
+    position: absolute;
+    margin-left: 100px;
+    top: 0;
+}
+
+.navbar
+{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    
+}
+
+.navbar ul
+{
+
+}
+
+.navbar ul li 
+{
+    padding-top: 25px;
+    list-style: none;
+    display: inline-block;
+    float: right;
+
+}
+
+.navbar ul li a
+{
+    text-decoration: none;
+    font-size: 14px;
+    font-family: arial;
+    padding: 0px 25px;
+}
+
+.userForm 
+{
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    font-size: 25px;
+    transform: translate(-50%, -50%);
+}
+
+.alert-success p
+{
+    text-align: center;
+    font-size: 25px;
+}
+
+.productList article
+{
+    padding-top: 25px;
+}
+
+
+.productName
+{
+    text-transform: capitalize;
+}
+
+
+
+
+
+/*
+header
+{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.navbar
+{
+    list-style: none;
+}
+
+.navbar li
+{
+    display: inline-block;
+    padding: 0px 20px;
+}
+*/

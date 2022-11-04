@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>@yield('title')</title>
+        @vite('resources/css/app.css')
+    </head>
+    <body>
+        <div class="container mx-auto">
+            <h1 class="header">@yield('title')</h1>
+        </div>
+        <div class="navbar">
+            <ul>
+                @if (Auth::guest())
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/">Homepage</a></li>
+                @else
+                    <li><a href="/cart">Cart</a></li>
+                    <li><a href="/products">Products</a></li>
+                    <li><a href="/">Homepage</a></li>
+                @endif
+            </ul>
+        </div>
+    </body>
+</html>
