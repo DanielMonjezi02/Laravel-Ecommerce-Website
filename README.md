@@ -23,7 +23,7 @@ This section wil cover how to setup the project and get it running within your s
 
 ### Clone the repo 
 1. Click the green button within the repo named "Code" as shown in the image below 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/tOixuSi" data-context="false" ><a href="//imgur.com/a/tOixuSi"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![](https://i.imgur.com/U5rkTWZ.png)
 
 ### Install PHP dependencies 
 
