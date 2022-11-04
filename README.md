@@ -12,5 +12,31 @@ This project is based on a basic shopping website which has been created with th
 This section wil cover how to setup the project and get it running within your system. 
 
 1. [Clone the repo](#clone-the-repo)
+2. Configure the website to point at the public directory within the project
+3. Create a database within MySQL
+4. [Install PHP dependencies](#install-php-dependencies) 
+5. [Install node dependencies](#install-node-dependencies)
+6. [Build front end assets](#build-front-end-assets)
+7. [Make an .env file](#make-an-env-file)
+8. [Migrate the database](#migrate-the-database)
+9. [Seed the database](#seed-the-database)
 
 ### Clone the repo 
+
+
+### Install PHP dependencies 
+
+
+### Install node dependencies 
+
+
+### Build front end assets
+
+
+### Make an .env file
+
+
+### Migrate the database
+
+
+### Seed the database 
