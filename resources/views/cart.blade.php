@@ -16,7 +16,7 @@
         @if (Auth::user() && Auth::user()->id === $cart->user_id)
             <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ $cart->product->price }}</h3>
             <form action="{{ route('cart.destroy', $cart->id) }}" method="POST">
-                <a class="btn btn-blue" href="{{ route('cart.show', $cart->id) }}">Show</a>
+                <button><a style="text-decoration:none" href="{{ route('cart.show', $cart->id) }}">Show</a></button>
                 @csrf
                 @method('DELETE')
                     <button type="submit" class="btn btn-red">Delete</button>

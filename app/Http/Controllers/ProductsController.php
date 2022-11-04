@@ -85,6 +85,8 @@ class ProductsController extends Controller
 
         $product->description = $request->description;
         $product->save();
+
+        return redirect()->route('products.index')->with('added', 'Product description has been edited');
     }
 
     /**

@@ -83,5 +83,8 @@ This section wil cover how to setup the project and get it running within your s
 
 ## Known Issues
 
+This section will cover any issues/bugs you may occur within the project that have not been resolved due to time constraints. 
+
 * First product within the products and cart page may bug out and result in the user unable to interact with the buttons. Possible workaround:
-    * Add 
+    * Add a product to cart other than the product at the top which will result in the site refreshing and letting you interact with the buttons for the top product.
+* Show button within the cart page shows as blue text

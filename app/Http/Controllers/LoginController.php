@@ -21,4 +21,10 @@ class LoginController extends Controller
         }
         return back()->withErrors(['email' => 'Error, login is incorrect. Please try again!.',]);
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
+    }
 }

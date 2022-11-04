@@ -9,9 +9,8 @@
 </div>
 @endif
 
-
+<div class ="productList">
 @foreach ($products as $product)
-    <div class ="productList">
         <article>
                 <h3 class="productName"><u>{{ $product->name }}</u></h3>
                 <p>{{ $product->description }}</p>
@@ -19,5 +18,5 @@
                 <a href="{{ route('products.show', $product->id) }}"><button>Add to cart</button></a>
                 <a class="btn btn-blue" href="{{ route('products.edit', $product->id) }}"><button>Edit Product</button></a>
         </article>
-    </div>
 @endforeach
+</div>
