@@ -40,3 +40,8 @@ This section wil cover how to setup the project and get it running within your s
 
 
 ### Seed the database 
+
+## Known Issues
+
+* First product within the products and cart page may bug out and result in the user unable to interact with the buttons. Possible workaround:
+    * Add 
