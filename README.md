@@ -59,6 +59,7 @@ This section wil cover how to setup the project and get it running within your s
 1. Open the project within your chosen code editor
 2. Locate a file named `.env.example` which should be at the bottom of your file explorer section 
 3. Change the following section as shown below to match your database details
+
 ![](https://i.imgur.com/glSiD30.png)
 
 
