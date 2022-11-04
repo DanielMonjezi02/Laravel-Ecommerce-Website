@@ -27,7 +27,7 @@ This section wil cover how to setup the project and get it running within your s
 2. Copy the URL of the repository
 3. Open your git bash terminal 
 4. Change the current directory to the location that you want the cloned directory to go to
-5. Into your termianl, type the following: git clone [INSERT THE LINK YOU COPIED]
+5. Into your termianl, type the following: ``git clone`` [INSERT THE LINK YOU COPIED]
 
 
 ### Install PHP dependencies 
@@ -36,11 +36,20 @@ This section wil cover how to setup the project and get it running within your s
     * ``php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"``
     * ``php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"``
     * ``php composer-setup.php``
+    * ``php -r "unlink('composer-setup.php');"``
+    * ``php composer.phar``
 
 ### Install node dependencies 
+1. If you do not have node installed, please go the following link: https://nodejs.org/dist/v16.11.0/ and install the ZIP version 
+    1. Once installed, unzip the contents while ensuring the file is named ``node``
+    2. Open your webserver terminal and type the following: ``set PATH=D:\node;%PATH%`` - Replace "D:" with the drive letter your node is located in
+2. Open your git bash terminal, change the current directory to the root of the project (htdocs/assignment01) and enter the following command:
+``../../../node/npm install -D tailwindcss postcss autoprefixer``
+3. Enter this command after: ``npx tailwind init -p``
 
 
 ### Build front end assets
+1. From the root of the project within git-bash terminal, enter the following command to build the assets: ``npm run dev``
 
 
 ### Make an .env file
