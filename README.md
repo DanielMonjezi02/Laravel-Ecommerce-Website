@@ -11,4 +11,6 @@ This project is based on a basic shopping website which has been created with th
 
 This section wil cover how to setup the project and get it running within your system. 
 
-1. [Test](https://imgur.com/a/0sTobVu)
+1. [Clone the repo](#clone-the-repo)
+
+### Clone the repo 
