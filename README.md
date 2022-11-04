@@ -29,7 +29,7 @@ This section wil cover how to setup the project and get it running within your s
 8. [Migrate the database](#migrate-the-database)
 9. [Seed the database](#seed-the-database)
 
-### Clone the repo 
+### 1. Clone the repo 
 1. Click the green button within the repo named "Code" as shown in the image below
 ![](https://i.imgur.com/U5rkTWZ.png)
 2. Copy the URL of the repository
@@ -38,7 +38,7 @@ This section wil cover how to setup the project and get it running within your s
 5. Into your termianl, type the following: ``git clone`` [INSERT THE LINK YOU COPIED]
 
 
-### Install PHP dependencies 
+### 2. Install PHP dependencies 
 1. Open your webserver terminal 
 2. Copy the following commands and ensure that you press enter after each command:
     * ``php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"``
@@ -48,7 +48,7 @@ This section wil cover how to setup the project and get it running within your s
     * ``php composer.phar``
 
 
-### Install node dependencies 
+### 3. Install node dependencies 
 1. If you do not have node installed, please go the following link: https://nodejs.org/dist/v16.11.0/ and install the ZIP version 
     1. Once installed, unzip the contents while ensuring the file is named ``node``
     2. Open your webserver terminal and type the following: ``set PATH=D:\node;%PATH%`` - Replace "D:" with the drive letter your node is located in
@@ -57,7 +57,7 @@ This section wil cover how to setup the project and get it running within your s
 3. Enter this command after: ``npx tailwind init -p``
 
 
-### Build front end assets
+### 4. Build front end assets
 1. From the root of the project within git-bash terminal, enter the following command to build the assets: ``npm run dev``
     * If an error pops up where npm does not exist, please open your webserver terminal and type the following: ``set PATH=D:\node;%PATH%`` - Replace "D:" with the drive letter your node is located in
 2. Ensure the git-bash terminal remains open will you view the website 
@@ -71,12 +71,12 @@ This section wil cover how to setup the project and get it running within your s
 ![](https://i.imgur.com/glSiD30.png)
 
 
-### Migrate the database
+### 5. Migrate the database
 1. Please ensure your MySQL module is running
 2. Open git-bash terminal, change the root to the project and enter the following command: ``php artisan migrate`` - You should see a list of tables being displayed
 3. Keep the terminal open and [seed the database](#seed-the-database)
 
-### Seed the database 
+### 6. Seed the database 
 1. You should already have completed the [migrate database](#migrate-the-database) section and therefore should still have the terminal open - If you do not, please refer back to the steps
 2. Enter the following command: ``php artisan db:seed``
 3. This is the last section and you should now be able to view the website along with the correct front end assets by visiting: http://localhost/ while ensuring both apache and mysql module's are running 
