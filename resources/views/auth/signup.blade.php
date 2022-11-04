@@ -7,6 +7,9 @@
             @csrf
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" class="p-2 bg-gray-200 @error('username') is-invalid @enderror" />
+            @error('username')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
             <label for="email">Email:</label>
             <input type="text" name="email" id="email" class="p-2 bg-gray-200 @error('email') is-invalid @enderror" />
             @error('email')
