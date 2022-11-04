@@ -81,21 +81,10 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-
         $request->validate(['description' => 'required']);
 
         $product->description = $request->description;
         $product->save();
-
-
-        /*
-        $cart = new Cart;
-
-        $cart->user_id = $request->id;
-        $cart->product_id = $products->id;
-
-        $cart->save();
-        */
     }
 
     /**
