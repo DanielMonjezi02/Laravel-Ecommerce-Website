@@ -24,6 +24,11 @@ This section wil cover how to setup the project and get it running within your s
 ### Clone the repo 
 1. Click the green button within the repo named "Code" as shown in the image below 
 ![](https://i.imgur.com/U5rkTWZ.png)
+2. Copy the URL of the repository
+3. Open your git bash terminal 
+4. Change the current directory to the location that you want the cloned directory to go to
+5. Type 'git clone' [INSERT THE LINK YOU COPIED]
+
 
 ### Install PHP dependencies 
 
