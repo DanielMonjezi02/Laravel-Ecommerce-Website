@@ -86,6 +86,11 @@
     text-decoration: none;
 }
 
+.account button
+{
+    width: 100px;
+    height: 100px;
+}
 
 
 

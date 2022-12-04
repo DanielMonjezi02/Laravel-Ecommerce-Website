@@ -18,9 +18,10 @@
                     <li><a href="/">Homepage</a></li>
                 @else
                     <li><a href="/logout">Logout</a></li>
+                    <li><a href="/account">Account</a></li>
                     <li><a href="/cart">Cart</a></li>
                     <li><a href="/products">Products</a></li>
-                    <li><a href="/">Homepage</a></li>
+                    <li><a href="/home">Homepage</a></li>
                 @endif
             </ul>
         </div>
