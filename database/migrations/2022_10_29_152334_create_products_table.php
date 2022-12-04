@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price');
+            $table->integer('quantity');
             $table->text('description');
             $table->foreignIdFor(Category::class);
             $table->timestamps();
