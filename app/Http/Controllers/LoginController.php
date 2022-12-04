@@ -13,4 +13,9 @@ class LoginController extends Controller
         auth()->logout();
         return redirect('/login');
     }
+
+    public function recoveryLogin()
+    {
+        return view('auth.two-factor-recovery-code-authentication');
+    }
 }
