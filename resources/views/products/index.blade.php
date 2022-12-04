@@ -15,9 +15,8 @@
                 <h3 class="productName"><u>{{ $product->name }}</u></h3>
                 <p>{{ $product->description }}</p>
                 <p><b>Price: £{{ $product->price }}</b></p>
-                <form action="{{ route('products.show', $product->id) }}" method="POST">
+                <form action="{{ route('addProductToCart', $product->id) }}" method="POST">
                         @csrf
-                        @method('PUT')
                         <p><b>Quantity</b>
                         <select name="quantity" id="quan">
                                 <option value="1">1</option>

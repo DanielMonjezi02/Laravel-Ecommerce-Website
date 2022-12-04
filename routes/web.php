@@ -21,9 +21,10 @@ use App\Http\Controllers\AccountController;
 
 Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 Route::get('/signup', [SignupController::class, 'signupDisplay']);
-Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin');
+Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
+Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
 Route::resource('/products', ProductsController::class);
 Route::resource('/cart', CartController::class);

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -18,14 +20,26 @@ class CartController extends Controller
         return view('cart', ['carts' => $carts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function addProductToCart(Request $request, Product $product)
     {
-        //
+        $user_id = Auth::id();
+        if($productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->exists() == true) // Checks if a cart already exists that matches with the user
+        {   
+            $quantitySelected = $request->get('quantity'); //Gets the quantity the user selected
+            $productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->first();
+            $totalQuantity = $productList->quantity + $quantitySelected;
+            $productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->update(['quantity' => $totalQuantity]); // Updates the quantity in the database 
+        }
+        else
+        {
+            $cart = new Cart;
+            $cart->product_id = $product->id;
+            $cart->quantity = $request->get('quantity');
+            $cart->user()->associate(Auth::user());
+            $cart->save();
+        }
+
+        return redirect()->route('products.index')->with('added', 'Added product to cart');   
     }
 
     /**
