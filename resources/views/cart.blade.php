@@ -14,7 +14,8 @@
     <div class ="productList">
         <article>
         @if (Auth::user() && Auth::user()->id === $cart->user_id)
-            <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ $cart->product->price }}</h3>
+            <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ (($cart->product->price)*($cart->quantity)) }}</h3>
+            <p class="cartQuantity">Quantity: {{ $cart->quantity }}</p>
             <form action="{{ route('cart.destroy', $cart->id) }}" method="POST">
                 <button><a style="text-decoration:none" href="{{ route('cart.show', $cart->id) }}">Show</a></button>
                 @csrf
