@@ -3,7 +3,7 @@
 
 @if (Auth::guest()) 
     <div class="userForm">
-        <form action="{{ route('authenticate') }}" method="POST">
+        <form action="{{ url('/login') }}" method="POST">
             @csrf
             <label for ="email">Email:</label>
             <input type="text" name="email" id="email" class="p-2 bg-gray-200 @error('email') is-invalid @enderror" />
