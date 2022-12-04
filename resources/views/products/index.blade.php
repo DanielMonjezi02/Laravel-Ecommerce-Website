@@ -28,7 +28,6 @@
                         </select></p>
                         <button type="submit" class="btn btn-blue">Add to cart</button>
                 </form>
-                <a class="btn btn-blue" href="{{ route('products.edit', $product->id) }}"><button>Edit Product</button></a>
         </article>
 @endforeach
 </div>

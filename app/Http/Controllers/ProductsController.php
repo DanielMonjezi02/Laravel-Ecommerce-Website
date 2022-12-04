@@ -62,17 +62,6 @@ class ProductsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product) // Adds a new row to the cart table to include the product the user click on add to cart
-    {
-        return view('products.edit', ['product' => $product]);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
