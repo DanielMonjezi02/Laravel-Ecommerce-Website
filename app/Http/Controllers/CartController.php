@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -18,25 +20,47 @@ class CartController extends Controller
         return view('cart', ['carts' => $carts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function addProductToCart(Request $request, Product $product)
     {
-        //
+        $user_id = Auth::id();
+        if(Cart::where('product_id', $product->id)->where('user_id', $user_id)->exists() == true) // Checks if a cart already exists that matches with the user
+        {   
+            $quantitySelected = $request->get('quantity'); //Gets the quantity the user selected
+            $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->first();
+            $totalQuantity = $product->quantity + $quantitySelected;
+            $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->update(['quantity' => $totalQuantity]); // Updates the quantity in the database 
+        }
+        else
+        {
+            if(Product::where('id', $product->id)->where('name', $product->name)->where('description', $product->description)->exists() == true) // Checks if product exists in database
+            {
+                $cart = new Cart;
+                $cart->product_id = $product->id;
+                $cart->quantity = $request->get('quantity');
+                $cart->user()->associate(Auth::user());
+                $cart->save(); 
+            }
+            else
+            {
+                return redirect()->route('products.index')->with('alert', 'Product does not exist! Has not been added to cart.');  
+            }
+        }
+
+        return redirect()->route('products.index')->with('alert', 'Added product to cart');   
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public static function getTotalCartPrice()
     {
-        //
+        $user_id = Auth::id();
+        $totalCartPrice = 0;
+        $productList = Cart::where('user_id', $user_id)->get();
+
+        foreach($productList as $product)
+        {
+            $totalCartPrice = $totalCartPrice + ($product->product->price * $product->quantity);
+        }
+    
+        return $totalCartPrice;
     }
 
     /**
@@ -45,33 +69,12 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
+
     public function show(Cart $cart)
     {
         return view('products.show', ['product' => $cart->product]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

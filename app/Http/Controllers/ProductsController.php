@@ -23,45 +23,6 @@ class ProductsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        $cart = new Cart;
-        
-        $cart->product_id = $product->id;
-        $cart->user()->associate(Auth::user());
-
-        $cart->save();
-
-        return redirect()->route('products.index')->with('added', 'Added product to cart');
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
