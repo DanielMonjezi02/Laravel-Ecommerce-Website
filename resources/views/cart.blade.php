@@ -27,3 +27,7 @@
     </div>
 @endforeach
 <h2 class="cartTotal">Cart total: £{{ CartController::getTotalCartPrice() }} </h2>
+<form action="{{route('checkout')}}" method="POST">
+    @csrf
+    <button>Checkout</button>
+</form>

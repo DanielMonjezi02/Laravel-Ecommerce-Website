@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,15 +55,73 @@ class CartController extends Controller
     {
         $user_id = Auth::id();
         $totalCartPrice = 0;
-        $productList = Cart::where('user_id', $user_id)->get();
+        $carts = Cart::where('user_id', $user_id)->get();
 
-        foreach($productList as $product)
+        foreach($carts as $cart)
         {
-            $totalCartPrice = $totalCartPrice + ($product->product->price * $product->quantity);
+            $totalCartPrice = $totalCartPrice + ($cart->product->price * $cart->quantity);
         }
     
         return $totalCartPrice;
     }
+
+    public function checkout()
+    {
+        $user_id = Auth::id();
+        $stripe = new \Stripe\StripeClient('sk_test_26PHem9AhJZvU623DfE1x4sd');
+
+        $order = new Order();
+        $order->status = 'unpaid';
+        $order->total_price = $this->getTotalCartPrice();
+        $order->user()->associate(Auth::user());
+        $order->save();
+
+        $carts = Cart::where('user_id', $user_id)->get();
+        $listOfProducts = [];
+        foreach($carts as $cart)
+        {
+            $listOfProducts[] = [
+                'price_data' => [
+                    'currency' => 'gbp',
+                    'product_data' => [
+                        'name' => $cart->product->name,
+                    ],
+                    'unit_amount' => $cart->product->price * 100,
+                ],
+                'quantity' => $cart->quantity,
+            ]; 
+
+            $orderItem = new OrderItem();
+            $orderItem->user()->associate(Auth::user());
+            $orderItem->product()->associate($cart->product);
+            $orderItem->quantity = $cart->quantity; 
+            $orderItem->unit_price = $cart->product->price;
+            $orderItem->order()->associate($order->id);
+            $orderItem->save();
+
+        }
+
+        $checkout_session = $stripe->checkout->sessions->create([
+          'line_items' => $listOfProducts,
+          'mode' => 'payment',
+          'success_url' => route('checkout.success', [], true),
+          'cancel_url' => route('checkout.cancel', [], true),
+        ]);
+
+
+        return redirect()->away($checkout_session->url);
+    }
+
+    public function sucessOrder()
+    {
+
+    }
+
+    public function cancelOrder()
+    {
+
+    }
+
 
     /**
      * Display the specified resource.

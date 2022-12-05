@@ -26,5 +26,8 @@ Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin');
 Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
 Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('/success', [CartController::class, 'successOrder'])->name('checkout.success');
+Route::post('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
 Route::resource('/products', ProductsController::class);
 Route::resource('/cart', CartController::class);

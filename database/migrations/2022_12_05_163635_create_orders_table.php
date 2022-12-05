@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('status');
             $table->decimal('total_price', 6, 2);
             $table->foreignIdFor(User::class);
-            $table->string('session_id');
             $table->timestamps();
         });
     }
