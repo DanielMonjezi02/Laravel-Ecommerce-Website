@@ -23,23 +23,30 @@ class CartController extends Controller
     public function addProductToCart(Request $request, Product $product)
     {
         $user_id = Auth::id();
-        if($productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->exists() == true) // Checks if a cart already exists that matches with the user
+        if(Cart::where('product_id', $product->id)->where('user_id', $user_id)->exists() == true) // Checks if a cart already exists that matches with the user
         {   
             $quantitySelected = $request->get('quantity'); //Gets the quantity the user selected
-            $productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->first();
-            $totalQuantity = $productList->quantity + $quantitySelected;
-            $productList = Cart::where('product_id', $product->id)->where('user_id', $user_id)->update(['quantity' => $totalQuantity]); // Updates the quantity in the database 
+            $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->first();
+            $totalQuantity = $product->quantity + $quantitySelected;
+            $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->update(['quantity' => $totalQuantity]); // Updates the quantity in the database 
         }
         else
         {
-            $cart = new Cart;
-            $cart->product_id = $product->id;
-            $cart->quantity = $request->get('quantity');
-            $cart->user()->associate(Auth::user());
-            $cart->save();
+            if(Product::where('id', $product->id)->where('name', $product->name)->where('description', $product->description)->exists() == true) // Checks if product exists in database
+            {
+                $cart = new Cart;
+                $cart->product_id = $product->id;
+                $cart->quantity = $request->get('quantity');
+                $cart->user()->associate(Auth::user());
+                $cart->save(); 
+            }
+            else
+            {
+                return redirect()->route('products.index')->with('alert', 'Product does not exist! Has not been added to cart.');  
+            }
         }
 
-        return redirect()->route('products.index')->with('added', 'Added product to cart');   
+        return redirect()->route('products.index')->with('alert', 'Added product to cart');   
     }
 
     public static function getTotalCartPrice()
