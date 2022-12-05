@@ -1,14 +1,14 @@
+@php
+    use App\Http\Controllers\CartController;
+@endphp
 @extends('layouts.app')
-
 @section('title', 'Shopping Cart')
 
 @if ($message = Session::get('deleted'))
-
-<div class="alert-success">
-    <p><u>{{ $message }}</u></p>
-</div>
+    <div class="alert-success">
+        <p><u>{{ $message }}</u></p>
+    </div>
 @endif
-
 
 @foreach ($carts as $cart)
     <div class ="productList">
@@ -25,5 +25,5 @@
         @endif
         </article>
     </div>
-
 @endforeach
+<h2 class="cartTotal">Cart total: £{{ CartController::getTotalCartPrice() }} </h2>

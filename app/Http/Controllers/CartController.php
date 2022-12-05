@@ -41,7 +41,21 @@ class CartController extends Controller
 
         return redirect()->route('products.index')->with('added', 'Added product to cart');   
     }
+
+    public static function getTotalCartPrice()
+    {
+        $user_id = Auth::id();
+        $totalCartPrice = 0;
+        $productList = Cart::where('user_id', $user_id)->get();
+
+        foreach($productList as $product)
+        {
+            $totalCartPrice = $totalCartPrice + ($product->product->price * $product->quantity);
+        }
     
+        return $totalCartPrice;
+    }
+
     /**
      * Display the specified resource.
      *
