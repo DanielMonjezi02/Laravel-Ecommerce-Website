@@ -118,7 +118,7 @@ class CartController extends Controller
 
     public function successOrder(Request $request)
     {
-        $stripe = new \Stripe\StripeClient('sk_test_26PHem9AhJZvU623DfE1x4sd');
+        $stripe = new \Stripe\StripeClient('STRIPE_SECRET_KEY');
         $session_id = $request->get('session_id');
         
         // Check if a session ID exists in stripe system so a random person without a valid order can not access this successOrder function
@@ -132,6 +132,11 @@ class CartController extends Controller
             throw new NotFoundHttpException;
         }
 
+        // Clears all the carts so that the cart is now empty after order 
+        $user_id = Auth::id();
+        $carts = Cart::where('user_id', $user_id)->delete(); 
+
+        // Updates order status to paid 
         $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
         $order->status = 'paid';
         $order->save();
