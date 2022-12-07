@@ -4,30 +4,34 @@
 @extends('layouts.app')
 @section('title', 'Shopping Cart')
 
-@if ($message = Session::get('deleted'))
+@if ($message = Session::get('alert'))
     <div class="alert-success">
         <p><u>{{ $message }}</u></p>
     </div>
 @endif
 
-@foreach ($carts as $cart)
-    <div class ="productList">
-        <article>
-        @if (Auth::user() && Auth::user()->id === $cart->user_id)
-            <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ (($cart->product->price)*($cart->quantity)) }}</h3>
-            <p class="cartQuantity">Quantity: {{ $cart->quantity }}</p>
-            <form action="{{ route('cart.destroy', $cart->id) }}" method="POST">
-                <button><a style="text-decoration:none" href="{{ route('cart.show', $cart->id) }}">Show</a></button>
-                @csrf
-                @method('DELETE')
-                    <button type="submit" class="btn btn-red">Delete</button>
-            </form>
-        @endif
-        </article>
-    </div>
-@endforeach
-<h2 class="cartTotal">Cart total: £{{ CartController::getTotalCartPrice() }} </h2>
-<form action="{{route('checkout')}}" method="POST">
-    @csrf
-    <button>Checkout</button>
-</form>
+@if(count($carts) > 0)
+    @foreach ($carts as $cart)
+        <div class ="productList">
+            <article>
+            @if (Auth::user() && Auth::user()->id === $cart->user_id)
+                <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ (($cart->product->price)*($cart->quantity)) }}</h3>
+                <p class="cartQuantity">Quantity: {{ $cart->quantity }}</p>
+                <form action="{{ route('cart.destroy', $cart->id) }}" method="POST">
+                    <button><a style="text-decoration:none" href="{{ route('cart.show', $cart->id) }}">Show</a></button>
+                    @csrf
+                    @method('DELETE')
+                        <button type="submit" class="btn btn-red">Delete</button>
+                </form>
+            @endif
+            </article>
+        </div>
+    @endforeach
+    <h2 class="cartTotal">Cart total: £{{ CartController::getTotalCartPrice() }} </h2>
+    <form action="{{route('checkout')}}" method="POST">
+        @csrf
+        <button>Checkout</button>
+    </form>
+@else
+    <h1>Your cart is currently empty</h1>
+@endif
