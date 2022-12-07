@@ -7,6 +7,7 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ProductsController; 
 use App\Http\Controllers\CartController; 
 use App\Http\Controllers\AccountController; 
+use App\Http\Controllers\MailController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,10 @@ Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin');
 Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
 Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.success');
+Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
 Route::resource('/products', ProductsController::class);
 Route::resource('/cart', CartController::class);
+Route::get('/orderConfirmedMail', [MailController::class, 'sendOrderConfirmedMail'])->name('sendOrderConfirmedMail');
+Route::get('/orderFailedMail', [MailController::class, 'sendOrderFailedMail'])->name('sendOrderFailedMail');
