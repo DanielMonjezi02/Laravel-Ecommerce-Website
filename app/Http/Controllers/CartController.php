@@ -137,12 +137,13 @@ class CartController extends Controller
         $order->save();
 
         // Redirect user to orders page with notification informaing them that their order has been successful
-        return redirect()->route('sendOrderMail'); // Send an email to user and redirects back to the order page
+        return redirect()->route('sendOrderConfirmedMail'); // Send an email confirmation to user and redirects back to the order page
     
     }
 
     public function cancelOrder()
     {
+        return redirect()->route('sendOrderFailedMail');
         return redirect()->route('cart.index')->with('alert', 'You cancelled your order');
     }
 

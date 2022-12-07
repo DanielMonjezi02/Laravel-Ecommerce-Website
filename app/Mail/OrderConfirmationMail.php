@@ -45,7 +45,7 @@ class OrderMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.order',
+            markdown: 'emails.order-confirmed',
         );
     }
 

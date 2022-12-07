@@ -32,4 +32,5 @@ Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.
 Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
 Route::resource('/products', ProductsController::class);
 Route::resource('/cart', CartController::class);
-Route::get('/emailOrder', [MailController::class, 'sendOrderMail'])->name('sendOrderMail');
+Route::get('/orderConfirmedMail', [MailController::class, 'sendOrderConfirmedMail'])->name('sendOrderConfirmedMail');
+Route::get('/orderFailedMail', [MailController::class, 'sendOrderFailedMail'])->name('sendOrderFailedMail');
