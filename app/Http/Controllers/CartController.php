@@ -101,7 +101,6 @@ class CartController extends Controller
             $orderItem->unit_price = $cart->product->price;
             $orderItem->order()->associate($order->id);
             $orderItem->save();
-
         }
 
         $checkout_session = $stripe->checkout->sessions->create([
@@ -118,7 +117,7 @@ class CartController extends Controller
 
     public function successOrder(Request $request)
     {
-        $stripe = new \Stripe\StripeClient('STRIPE_SECRET_KEY');
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $session_id = $request->get('session_id');
         
         // Check if a session ID exists in stripe system so a random person without a valid order can not access this successOrder function

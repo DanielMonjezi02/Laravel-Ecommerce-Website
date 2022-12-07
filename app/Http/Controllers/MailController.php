@@ -10,11 +10,11 @@ use App\Mail\OrderFailedMail;
 
 class MailController extends Controller
 {
-    public function sendOrderConfirmationMail()
+    public function sendOrderConfirmedMail()
     {
         $name = Auth::user()->username;
         $email = Auth::user()->email;
-        Mail::to($email)->send(new OrderConfirmationMail($name));
+        Mail::to($email)->send(new OrderConfirmedMail($name));
 
         return redirect()->back();
     }
