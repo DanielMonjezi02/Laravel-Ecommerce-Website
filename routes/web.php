@@ -7,6 +7,7 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\ProductsController; 
 use App\Http\Controllers\CartController; 
 use App\Http\Controllers\AccountController; 
+use App\Http\Controllers\MailController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,4 @@ Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.
 Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
 Route::resource('/products', ProductsController::class);
 Route::resource('/cart', CartController::class);
+Route::get('/emailOrder', [MailController::class, 'sendOrderMail'])->name('sendOrderMail');

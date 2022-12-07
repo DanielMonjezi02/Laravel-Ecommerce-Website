@@ -47,7 +47,7 @@ class CartController extends Controller
                 return redirect()->route('products.index')->with('alert', 'Product does not exist! Has not been added to cart.');  
             }
         }
-
+        
         return redirect()->route('products.index')->with('alert', 'Added product to cart');   
     }
 
@@ -92,7 +92,7 @@ class CartController extends Controller
                 ],
                 'quantity' => $cart->quantity,
             ]; 
-
+        
             // Creates an orderItem table for each product in the cart and associates it with the order. This allows us to check what products are linked with the order
             $orderItem = new OrderItem();
             $orderItem->user()->associate(Auth::user());
@@ -113,8 +113,7 @@ class CartController extends Controller
         $order->session_id = $checkout_session->id;
         $order->save();
 
-
-        return redirect()->away($checkout_session->url); // This will direct user to checkout page and they will either go to the checkout.success or checkout.cancel route after checkout
+        return redirect()->away($checkout_session->url); // This will direct user to checkout page and they will either go to the checkout.success or checkout.cancel route after checkout depening on their action 
     }
 
     public function successOrder(Request $request)
@@ -137,7 +136,9 @@ class CartController extends Controller
         $order->status = 'paid';
         $order->save();
 
-       // Redirect user to orders page with notification informaing them that their order has been successful
+        // Redirect user to orders page with notification informaing them that their order has been successful
+        return redirect()->route('sendOrderMail'); // Send an email to user and redirects back to the order page
+    
     }
 
     public function cancelOrder()
