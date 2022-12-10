@@ -21,14 +21,16 @@ class CouponController extends Controller
         if(!$coupon)
         {
             return redirect()->route('cart.index')->with('alert', 'Invalid coupon code. Please try again.');
+        } else
+        {
+            session()->put('coupon', [
+                'name' => $coupon->code,
+                'discount' => $coupon->discount(CartController::getTotalCartPrice()),
+            ]);
+
+            return redirect()->route('cart.index')->with('alert', 'Coupon has been applied to the cart!');
         }
-
-        session()->put('coupon', [
-            'name' => $coupon->code,
-            'discount' => $coupon->discount(CartController::getTotalCartPrice()),
-        ]);
-
-        return redirect()->route('cart.index')->with('alert', 'Coupon has been applied to the cart!');
+        
     }
 
     /**

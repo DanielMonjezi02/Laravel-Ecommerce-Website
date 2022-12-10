@@ -28,7 +28,7 @@
         </div>
     @endforeach
     @if(session()->has('coupon'))
-        <h2 class="cartTotal">Subtotal total: £{{ CartController::getTotalCartPrice() }} </h2>
+        <h2 class="cartTotal">Subtotal Total: £{{ CartController::getTotalCartPrice() }} </h2>
         <h2>Discount ({{ session()->get('coupon')['name'] }}) : £{{ session()->get('coupon')['discount']}}</h2>
         <form action="{{ route('coupon.destroy') }}" method="POST">
         @csrf
@@ -36,7 +36,7 @@
             <button type="submit" class="btn btn-red">Remove Coupon</button>
         </form>
     @endif
-    <h2 class="cartTotal">Subtotal total: £{{ CartController::getTotalCartPrice() }} </h2>
+    <h2 class="cartTotal">Cart Total: £{{ CartController::getTotalCartPrice() }} </h2>
     <form action="{{route('checkout')}}" method="POST">
         @csrf
         <button type ="submit">Checkout</button>
