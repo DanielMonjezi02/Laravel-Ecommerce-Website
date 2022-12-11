@@ -61,7 +61,12 @@ class CartController extends Controller
         {
             $totalCartPrice = $totalCartPrice + ($cart->product->price * $cart->quantity);
         }
-    
+
+        if(session()->has('coupon'))
+        {
+            $coupon_amount = session()->get('coupon')['discount'];
+            $totalCartPrice = $totalCartPrice - $coupon_amount;
+        }
         return $totalCartPrice;
     }
 
@@ -70,7 +75,7 @@ class CartController extends Controller
         $user_id = Auth::id();
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
 
-        // Creates an order
+        // Creates an order table
         $order = new Order();
         $order->status = 'unpaid';
         $order->total_price = $this->getTotalCartPrice();
@@ -103,12 +108,27 @@ class CartController extends Controller
             $orderItem->save();
         }
 
-        $checkout_session = $stripe->checkout->sessions->create([
-          'line_items' => $listOfProducts,
-          'mode' => 'payment',
-          'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-          'cancel_url' => route('checkout.cancel', [], true),
-        ]);
+
+        if(!session()->get('coupon')) // Checks if the user has a coupon applied to cart
+        {
+            $checkout_session = $stripe->checkout->sessions->create([
+                'line_items' => $listOfProducts,
+                'mode' => 'payment',
+                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' => route('checkout.cancel', [], true),
+            ]);
+        } else {    
+            $checkout_session = $stripe->checkout->sessions->create([
+                'line_items' => $listOfProducts,
+                'mode' => 'payment',
+                'discounts' => [[
+                    'coupon' => session()->get('coupon')['name'],
+                ]],
+                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' => route('checkout.cancel', [], true),
+            ]);
+        }
+
         $order->session_id = $checkout_session->id;
         $order->save();
 
