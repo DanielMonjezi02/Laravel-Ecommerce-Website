@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,7 +62,12 @@ class CartController extends Controller
         {
             $totalCartPrice = $totalCartPrice + ($cart->product->price * $cart->quantity);
         }
-    
+
+        if(session()->has('coupon'))
+        {
+            $coupon_amount = session()->get('coupon')['discount'];
+            $totalCartPrice = $totalCartPrice - $coupon_amount;
+        }
         return $totalCartPrice;
     }
 
@@ -70,7 +76,7 @@ class CartController extends Controller
         $user_id = Auth::id();
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
 
-        // Creates an order
+        // Creates an order table
         $order = new Order();
         $order->status = 'unpaid';
         $order->total_price = $this->getTotalCartPrice();
@@ -103,12 +109,27 @@ class CartController extends Controller
             $orderItem->save();
         }
 
-        $checkout_session = $stripe->checkout->sessions->create([
-          'line_items' => $listOfProducts,
-          'mode' => 'payment',
-          'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-          'cancel_url' => route('checkout.cancel', [], true),
-        ]);
+
+        if(!session()->get('coupon')) // Checks if the user has a coupon applied to cart
+        {
+            $checkout_session = $stripe->checkout->sessions->create([
+                'line_items' => $listOfProducts,
+                'mode' => 'payment',
+                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' => route('checkout.cancel', [], true),
+            ]);
+        } else {    
+            $checkout_session = $stripe->checkout->sessions->create([
+                'line_items' => $listOfProducts,
+                'mode' => 'payment',
+                'discounts' => [[
+                    'coupon' => session()->get('coupon')['name'],
+                ]],
+                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+                'cancel_url' => route('checkout.cancel', [], true),
+            ]);
+        }
+
         $order->session_id = $checkout_session->id;
         $order->save();
 
@@ -131,7 +152,7 @@ class CartController extends Controller
             throw new NotFoundHttpException;
         }
 
-        // Clears all the carts so that the cart is now empty after order 
+        // Clears all the carts that are associated to the user so that the cart is now empty after order 
         $user_id = Auth::id();
         $carts = Cart::where('user_id', $user_id)->delete(); 
 
@@ -140,8 +161,16 @@ class CartController extends Controller
         $order->status = 'paid';
         $order->save();
 
-        // Redirect user to orders page with notification informaing them that their order has been successful
+        // Delete coupon if exists
+        if(session()->get('coupon'))
+        {
+            Coupon::where('code', session()->get('coupon')['name'])->delete();
+            session()->forget('coupon');
+        }
+
         return redirect()->route('sendOrderConfirmedMail'); // Send an email confirmation to user and redirects back to the order page
+   
+        // Redirect user to orders page with notification informaing them that their order has been successful
     
     }
 
