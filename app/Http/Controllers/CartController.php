@@ -6,7 +6,6 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -138,43 +137,24 @@ class CartController extends Controller
 
     public function successOrder(Request $request)
     {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-        $session_id = $request->get('session_id');
-        
-        // Check if a session ID exists in stripe system so a random person without a valid order can not access this successOrder function
-        try{         
-            $session = $stripe->checkout->sessions->retrieve($session_id); 
-            if(!$session){
-                throw new NotFoundHttpException;
-            }
-        }catch(\Exception $a)
-        {
-            throw new NotFoundHttpException;
-        }
-
-        // Clears all the carts that are associated to the user so that the cart is now empty after order 
-        $user_id = Auth::id();
-        $carts = Cart::where('user_id', $user_id)->delete(); 
-
-        // Updates order status to paid 
+        $session_id = $this->checkSessionID($request);
         $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
-        $order->status = 'paid';
-        $order->save();
+        $order->success();
 
-        // Delete coupon if exists
-        if(session()->get('coupon'))
-        {
-            Coupon::where('code', session()->get('coupon')['name'])->delete();
-            session()->forget('coupon');
-        }
-
-        return redirect()->route('sendOrderConfirmedMail'); // Send an email confirmation to user and redirects back to the order page
-   
-        // Redirect user to orders page with notification informaing them that their order has been successful
+        return redirect()->route('cart.index')->with('alert', 'You order was successful');
     
     }
 
     public function cancelOrder(Request $request)
+    {
+        $session_id = $this->checkSessionID($request);
+        $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
+        $order->cancelled();
+
+        return redirect()->route('cart.index')->with('alert', 'You cancelled your order');
+    }
+
+    public function checkSessionID(Request $request)
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $session_id = $request->get('session_id');
@@ -183,17 +163,14 @@ class CartController extends Controller
         try{         
             $session = $stripe->checkout->sessions->retrieve($session_id); 
             if(!$session){
-                throw new NotFoundHttpException;
+                abort(403, 'Checkout session does not exist.');
             }
         }catch(\Exception $a)
         {
-            throw new NotFoundHttpException;
+            abort(403, 'Checkout session does not exist.');
         }
 
-        $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
-        $order->cancel();
-
-        return redirect()->route('cart.index')->with('alert', 'You cancelled your order');
+        return $session_id;
     }
 
 

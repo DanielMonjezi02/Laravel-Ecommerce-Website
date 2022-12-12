@@ -20,7 +20,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function cancel()
+    public function cancelled()
     {
         $this->status = 'cancelled';
         $this->save();
@@ -28,5 +28,23 @@ class Order extends Model
         $name = Auth::user()->username;
         $email = Auth::user()->email;
         Mail::to($email)->send(new OrderFailedMail($name));
+    }
+
+    public function success()
+    {
+        // Clears all the carts that are associated to the user so that the cart is now empty after order 
+        $user_id = Auth::id();
+        $carts = Cart::where('user_id', $user_id)->delete();
+
+        $this->status = 'paid';
+        $this->save();
+        
+        // Delete coupon if one has been used
+        if(session()->get('coupon'))
+        {
+            Coupon::where('code', session()->get('coupon')['name'])->delete();
+            session()->forget('coupon');
+        }
+        
     }
 }
