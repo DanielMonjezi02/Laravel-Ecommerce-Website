@@ -116,7 +116,7 @@ class CartController extends Controller
                 'line_items' => $listOfProducts,
                 'mode' => 'payment',
                 'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => route('checkout.cancel', [], true),
+                'cancel_url' => route('checkout.cancel', [], true)."?session_id={CHECKOUT_SESSION_ID}",
             ]);
         } else {    
             $checkout_session = $stripe->checkout->sessions->create([
@@ -126,7 +126,7 @@ class CartController extends Controller
                     'coupon' => session()->get('coupon')['name'],
                 ]],
                 'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => route('checkout.cancel', [], true),
+                'cancel_url' => route('checkout.cancel', [], true)."?session_id={CHECKOUT_SESSION_ID}",
             ]);
         }
 
@@ -174,9 +174,25 @@ class CartController extends Controller
     
     }
 
-    public function cancelOrder()
+    public function cancelOrder(Request $request)
     {
-        return redirect()->route('sendOrderFailedMail');
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+        $session_id = $request->get('session_id');
+        
+        // Check if a session ID exists in stripe system so a random person without a valid order can not access this successOrder function
+        try{         
+            $session = $stripe->checkout->sessions->retrieve($session_id); 
+            if(!$session){
+                throw new NotFoundHttpException;
+            }
+        }catch(\Exception $a)
+        {
+            throw new NotFoundHttpException;
+        }
+
+        $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
+        $order->cancel();
+
         return redirect()->route('cart.index')->with('alert', 'You cancelled your order');
     }
 
