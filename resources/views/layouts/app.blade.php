@@ -14,7 +14,7 @@
             <ul>
                 @if (Auth::guest())
                     <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/register">Sign Up</a></li>
                     <li><a href="/">Homepage</a></li>
                 @else
                     <li><a href="/logout">Logout</a></li>

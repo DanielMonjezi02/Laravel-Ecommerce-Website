@@ -3,7 +3,7 @@
 
 @if (Auth::guest())
     <div class="userForm">
-        <form action="{{ route('create') }}" method="POST">
+        <form action="{{ route('register') }}" method="POST">
             @csrf
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" class="p-2 bg-gray-200 @error('username') is-invalid @enderror" />
@@ -20,7 +20,12 @@
             @error('password')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-            <button type="submit" class="btn btn-blue">Login</button>
+            <label for="password_confirmation">Password Confirm:</label>
+            <input name="password_confirmation" id="password_confirmation" class="p-2 bg-gray-200 @error('password_confirmation') is-invalid @enderror" />
+            @error('password_confirmation')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            <button type="submit" class="btn btn-blue">Sign Up</button>
             @if ($message = Session::get('success'))
                 <div class="alert-success">
                     <p>{{ $message }}</p>
