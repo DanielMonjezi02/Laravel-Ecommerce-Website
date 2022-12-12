@@ -22,7 +22,7 @@ class CouponSeeder extends Seeder
         ]);
 
         Coupon::create([
-            'code' => '15%OFF',
+            'code' => '15PERCTOFF',
             'type' => 'percent',
             'percent_off' => 15,
         ]);

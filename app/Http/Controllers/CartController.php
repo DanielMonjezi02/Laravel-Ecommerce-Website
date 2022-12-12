@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -151,7 +152,7 @@ class CartController extends Controller
             throw new NotFoundHttpException;
         }
 
-        // Clears all the carts so that the cart is now empty after order 
+        // Clears all the carts that are associated to the user so that the cart is now empty after order 
         $user_id = Auth::id();
         $carts = Cart::where('user_id', $user_id)->delete(); 
 
@@ -160,8 +161,16 @@ class CartController extends Controller
         $order->status = 'paid';
         $order->save();
 
-        // Redirect user to orders page with notification informaing them that their order has been successful
+        // Delete coupon if exists
+        if(session()->get('coupon'))
+        {
+            Coupon::where('code', session()->get('coupon')['name'])->delete();
+            session()->forget('coupon');
+        }
+
         return redirect()->route('sendOrderConfirmedMail'); // Send an email confirmation to user and redirects back to the order page
+   
+        // Redirect user to orders page with notification informaing them that their order has been successful
     
     }
 
