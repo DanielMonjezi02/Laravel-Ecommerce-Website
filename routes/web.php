@@ -38,9 +38,6 @@ Route::middleware([auth::class])->group(function () {
     Route::resource('/cart', CartController::class); 
 });
 
-Route::get('/orderConfirmedMail', [MailController::class, 'sendOrderConfirmedMail'])->name('sendOrderConfirmedMail');
-Route::get('/orderFailedMail', [MailController::class, 'sendOrderFailedMail'])->name('sendOrderFailedMail');
-
 Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
 Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
 
