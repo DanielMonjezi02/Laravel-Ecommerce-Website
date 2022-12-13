@@ -23,15 +23,15 @@ use App\Http\Controllers\CouponController;
 
 Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 
-Route::get('/account', [AccountController::class, 'displayAccountSettings']);
+Route::get('/account', [AccountController::class, 'displayAccountSettings'])->middleware('password.confirm');
 
 Route::get('/logout', [LoginController::class, 'logout']);
-Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin');
+Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin']);
 
 /* Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
 Route::get('/signup', [SignupController::class, 'signupDisplay']);
 */
-Route::resource('/products', ProductsController::class);
+Route::resource('/products', ProductsController::class)->middleware('auth');
 
 Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
 Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
