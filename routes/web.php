@@ -26,7 +26,7 @@ Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepa
 Route::get('/account', [AccountController::class, 'displayAccountSettings'])->middleware('password.confirm');
 
 Route::get('/logout', [LoginController::class, 'logout']);
-Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin']);
+Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');
 
 Route::resource('/products', ProductsController::class);
 
