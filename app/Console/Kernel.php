@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('birthday:email')->hourly();
+        $schedule->command('email:birthday')->everyDaily(); // Runs every midnight 
     }
 
     /**

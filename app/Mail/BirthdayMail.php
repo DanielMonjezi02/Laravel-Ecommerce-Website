@@ -13,7 +13,7 @@ class BirthdayMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
+    public $username;
     public $coupon;
 
     /**
@@ -21,9 +21,9 @@ class BirthdayMail extends Mailable
      *
      * @return void
      */
-    public function __construct($name, $coupon)
+    public function __construct($username, $coupon)
     {
-        $this->name = $name;
+        $this->username = $username;
         $this->coupon = $coupon;
     }
 
