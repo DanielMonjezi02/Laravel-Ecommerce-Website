@@ -28,9 +28,9 @@ Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin');
 
-Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
+/* Route::post('/signup', [SignupController::class, 'create'])->name('create'); 
 Route::get('/signup', [SignupController::class, 'signupDisplay']);
-
+*/
 Route::resource('/products', ProductsController::class);
 
 Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
