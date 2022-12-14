@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Reset Password')
+@section('title', 'Change Password')
 
 <div class="userForm">
     <form action="{{ route('password.update') }}" method="POST">
