@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderFailedMail extends Mailable
+class OrderCancelledMail extends Mailable
 {
     use Queueable, SerializesModels;
     
@@ -32,7 +32,7 @@ class OrderFailedMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Order Failed',
+            subject: 'Order Cancelled',
         );
     }
 
@@ -44,7 +44,7 @@ class OrderFailedMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.order-failed',
+            markdown: 'emails.order-cancelled',
         );
     }
 

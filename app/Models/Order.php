@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Mail\OrderConfirmedMail;
-use App\Mail\OrderFailedMail;
+use App\Mail\OrderCancelledMail;
 
 class Order extends Model
 {
@@ -27,7 +27,7 @@ class Order extends Model
 
         $username = Auth::user()->username;
         $email = Auth::user()->email;
-        Mail::to($email)->send(new OrderFailedMail($name));
+        Mail::to($email)->send(new OrderCancelledMail($username));
     }
 
     public function success()
