@@ -27,7 +27,7 @@ class Order extends Model
 
         $username = Auth::user()->username;
         $email = Auth::user()->email;
-        Mail::to($email)->send(new OrderFailedMail($name));
+        Mail::to($email)->send(new OrderFailedMail($username));
     }
 
     public function success()
