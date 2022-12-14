@@ -21,6 +21,19 @@ class ProductReviewController extends Controller
         $user_id = Auth::id();
         $rating = $request->input('product_rating');
         $product_id = $request->input('product_id');
+        $comment = $request->input('comment');
+        if($comment == NULL & $rating == null)
+        {
+            return redirect()->route('productReview', $product_id)->with('alert', 'Comment cannot be blank and you must select a rating star!');
+        }
+        else if($comment == NULL)
+        {
+            return redirect()->route('productReview', $product_id)->with('alert', 'You must input a comment!');
+        }
+        else if($rating == NULL)
+        {
+            return redirect()->route('productReview', $product_id)->with('alert', 'You must select a rating star');
+        }
 
         $product_check = Product::where('id', $product_id)->first();
         if($product_check)
@@ -35,6 +48,7 @@ class ProductReviewController extends Controller
                 if($existing_rating)
                 {
                     $existing_rating->rating = $rating;
+                    $existing_rating->comment = $comment;
                     $existing_rating->update();
                     return redirect()->route('productReview', $product_id)->with('alert', 'Your review has been updated. Thank you!');
                 }
@@ -42,6 +56,7 @@ class ProductReviewController extends Controller
                 {
                     $review = new Review;
                     $review->rating = $rating;
+                    $review->comment = $comment;
                     $review->user()->associate(Auth::user());
                     $review->product()->associate($product_check);
                     $review->save();
@@ -49,11 +64,11 @@ class ProductReviewController extends Controller
                 }
             }
             else{
-                return redirect()->route('orders')->with('alert', 'Your order ' . $order->id . ' was successful');
+                return redirect()->route('orders')->with('alert', 'You cannot rate a product without a purchase!');
             }
         }
         else{
-            return redirect()->route('orders')->with('alert', 'Your order ' . $order->id . ' was successful');
+            return redirect()->route('orders')->with('alert', 'Link was broken!');
         }
         
     }

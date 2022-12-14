@@ -3,7 +3,7 @@
     display: flex;
     transform: translate(-50%, -50%) rotateY(180deg); 
     margin: 25px auto;
-    left: 100px;
+    left: 135px;
 }
 
 .rating input{
@@ -48,4 +48,13 @@
     opacity: 1;
 }
 
+.col-md-8 h3{
+    position: absolute;
+    margin: 50px auto;
+}
+
+.col-md-8 button{
+    position: absolute;
+    top: 170px;
+}
 

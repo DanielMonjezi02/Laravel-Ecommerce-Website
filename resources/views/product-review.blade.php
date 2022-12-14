@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row">   
             <div class="col-md-4">
                 <img src="https://i.imgur.com/k5wmPtf.jpg" />
                 <h2>{{ $user->username }}</h2>
@@ -35,7 +35,9 @@
                         <input type="radio" value="2" name="product_rating" id="star4"><label for="star4"></label>
                         <input type="radio" value="1" name="product_rating" id="star5"><label for="star5"></label>
                     </div>
-                    <button type="submit" class="btn btn-red" style="margin: 100px auto;">Leave Review</button>
+                    <h3>Comment:</h3>
+                    <textarea id="comment" name="comment" rows="4" cols="50" style="resize: none; margin: 80px auto"></textarea>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Leave Review</button>
                 </form>
             </div>
         </div>
