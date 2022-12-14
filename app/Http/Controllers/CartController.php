@@ -27,10 +27,10 @@ class CartController extends Controller
         $user_id = Auth::id();
         if(Cart::where('product_id', $product->id)->where('user_id', $user_id)->exists() == true) // Checks if a cart already exists that matches with the user
         {   
-            $quantitySelected = $request->get('quantity'); //Gets the quantity the user selected
             $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->first();
-            $totalQuantity = $product->quantity + $quantitySelected;
-            $product = Cart::where('product_id', $product->id)->where('user_id', $user_id)->update(['quantity' => $totalQuantity]); // Updates the quantity in the database 
+            $totalQuantity = $product->quantity + $request->get('quantity'); // Adds quantity from database and the quantity user selected
+            $product->quantity = $totalQuantity; // Updates the quantity in the database
+            $product->save(); 
         }
         else
         {
