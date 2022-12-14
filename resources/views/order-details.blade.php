@@ -19,29 +19,34 @@
             <div class="col-md-4" style="margin: 100px auto;">
                 <div class="row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Order Number</p>
-                        @foreach ($orders as $order)
-                            <a href ="{{ route('orderDetails', $order) }}">{{ $order->id }}</a>
-                            <div class="w-100" style="margin: 10px auto;"></div>
+                        <b><u><p>Product Name</p></u></b>
+                        @foreach ($orderItems as $orderItem)
+                            <p>{{ucfirst($orderItem->product->name) }} - Review Product</p>
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Date</p>
-                        @foreach ($orders as $order)
-                            <p>{{ date('d-M-y', strtotime($order->created_at)) }}</p>
+                        <b><u><p>Quantity</p></u></b>
+                        @foreach ($orderItems as $orderItem)
+                            <p>{{ $orderItem->quantity }}</p>
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Price</p>
-                        @foreach ($orders as $order)
-                            <p>£{{ $order->total_price }}</p>
+                        <b><u><p>Price Per Unit</p></u></b>
+                        @foreach ($orderItems as $orderItem)
+                            <p>£{{ $orderItem->product->price }}</p>
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Status</p>
-                        @foreach ($orders as $order)
-                            <p>{{ucfirst ($order->status)}}</p>
+                        <b><u><p>Total Product Price</p></u></b>
+                        @foreach ($orderItems as $orderItem)
+                            <p>£{{ (($orderItem->product->price)*($orderItem->quantity)) }}</p>
                         @endforeach
+                        <b><p>Total: £{{ $order->total_price }}</p></b>
+                        @if($order->status == 'paid')
+                            <b><p>Amount Paid: £{{ $order->total_price }}</p></b>
+                        @else
+                            <b><p>Amount Paid: £0.00</p></b>
+                        @endif
                     </div>
                 </div>
             </div>
