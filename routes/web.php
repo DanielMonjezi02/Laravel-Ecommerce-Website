@@ -22,10 +22,10 @@ use App\Http\Controllers\CouponController;
 
 Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 
-Route::get('/account', [AccountController::class, 'displayAccountSettings'])
+Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
-Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])
-Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails')
+Route::get('/account/orders', [AccountController::class, 'displayAccountOrders']);
+Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
 
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');

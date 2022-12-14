@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Orders')
-
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('account.css') }}" >
@@ -18,10 +16,15 @@
             </div>
             <div class="col-md-4" style="margin: 100px auto;">
                 <div class="row">
+                    <h2>Order: {{$order->id}} ({{ ucfirst($order->status) }})</h2>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <b><u><p>Product Name</p></u></b>
                         @foreach ($orderItems as $orderItem)
-                            <p>{{ucfirst($orderItem->product->name) }} - Review Product</p>
+                            @if($order->status == 'paid')
+                                <p>{{ucfirst($orderItem->product->name) }} - Review Product</p>
+                            @else
+                                <p>{{ucfirst($orderItem->product->name) }}</p>
+                            @endif
                         @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -41,7 +44,7 @@
                         @foreach ($orderItems as $orderItem)
                             <p>£{{ (($orderItem->product->price)*($orderItem->quantity)) }}</p>
                         @endforeach
-                        <b><p>Total: £{{ $order->total_price }}</p></b>
+                        <b><p>Order Total: £{{ $order->total_price }}</p></b>
                         @if($order->status == 'paid')
                             <b><p>Amount Paid: £{{ $order->total_price }}</p></b>
                         @else

@@ -16,37 +16,38 @@
                 <a class="btn btn-primary" href="{{ url('/account/security') }}" role="button">Security</a>
                 <a class="btn btn-primary" href="{{ url('/account/orders') }}" role="button">Orders</a>
             </div>
-            <div class="col-md-4" style="margin: 100px auto;">
-                <div class="row">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Order Number</p>
-                        @foreach ($orders as $order)
-                            <a href ="{{ route('orderDetails', $order) }}">{{ $order->id }}</a>
-                            <div class="w-100" style="margin: 10px auto;"></div>
-                        @endforeach
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Date</p>
-                        @foreach ($orders as $order)
-                            <p>{{ date('d-M-y', strtotime($order->created_at)) }}</p>
-                        @endforeach
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Price</p>
-                        @foreach ($orders as $order)
-                            <p>£{{ $order->total_price }}</p>
-                        @endforeach
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <p>Status</p>
-                        @foreach ($orders as $order)
-                            <p>{{ucfirst ($order->status)}}</p>
-                        @endforeach
+            @if(count($orders) > 0)
+                <div class="col-md-4" style="margin: 100px auto;">
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <b><u><p>Order Number</p></u></b>
+                            @foreach ($orders as $order)
+                                <a href ="{{ route('orderDetails', $order) }}">{{ $order->id }}</a>
+                                <div class="w-100" style="margin: 10px auto;"></div>
+                            @endforeach
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <b><u><p>Date</p></u></b>
+                            @foreach ($orders as $order)
+                                <p>{{ date('d-M-y', strtotime($order->created_at)) }}</p>
+                            @endforeach
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <b><u><p>Price</p></u></b>
+                            @foreach ($orders as $order)
+                                <p>£{{ $order->total_price }}</p>
+                            @endforeach
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <b><u><p>Status</p></u></b>
+                            @foreach ($orders as $order)
+                                <p>{{ucfirst ($order->status)}}</p>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </body>
