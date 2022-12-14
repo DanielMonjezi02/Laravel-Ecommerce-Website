@@ -12,7 +12,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->word(),
+            'name' => fake()->unique()->word(),
             'description' => fake()->paragraph(),
             'price' => fake()->randomFloat(2, 1, 10),
             'quantity' => 1,

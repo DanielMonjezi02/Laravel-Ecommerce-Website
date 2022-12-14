@@ -77,6 +77,7 @@ class CartController extends Controller
 
         // Creates an order table
         $order = new Order();
+        $order->id = fake()->numerify('######');
         $order->status = 'unpaid';
         $order->total_price = $this->getTotalCartPrice();
         $order->user()->associate(Auth::user());
@@ -141,7 +142,7 @@ class CartController extends Controller
         $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
         $order->success();
 
-        return redirect()->route('cart.index')->with('alert', 'You order was successful');
+        return redirect()->route('orders')->with('alert', 'Your order ' . $order->id . ' was successful');
     
     }
 
