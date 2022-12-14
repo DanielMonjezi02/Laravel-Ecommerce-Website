@@ -24,6 +24,7 @@ use App\Http\Controllers\CouponController;
 Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 
 Route::get('/account', [AccountController::class, 'displayAccountSettings'])->middleware('password.confirm');
+Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
 
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');
@@ -41,6 +42,7 @@ Route::middleware([auth::class])->group(function () {
 
 Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
 Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
+
 
 
 

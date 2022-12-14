@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Account Details')
+@section('title', 'Security')
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -17,17 +17,27 @@
                 <a class="btn btn-primary" href="{{ url('/account/orders') }}" role="button">Orders</a>
             </div>
             <div class="col-md-8" style="margin: 100px auto;">
-                <h1>Personal Info</h1>
-                </h2>Username:</h2>
-                <input name="name" id="name" value="{{ $user->username }}" type="text" readonly>
-                <div class="w-100" style="margin: 20px auto;"></div>
-                </h2>Email:</h2>
-                <input name="name" id="name" value="{{ $user->email }}" type="text" readonly>
-                <div class="w-100" style="margin: 20px auto;"></div>
-                </h2>Birthday:</h2>
-                <input name="name" id="name" value="{{ $user->dob }}" type="text" readonly>
-                <div class="w-100" style="margin: 20px auto;"></div>
-            </div>
+            @if(! auth()->user()->two_factor_secret)
+                <h2>You have not enabled two factor authentication</h2>
+                <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                    @csrf
+                    <button type="submit">Enable</button>
+                </form>
+            @else
+                <form method="POST" action="{{ url('user/two-factor-authentication') }}">
+                @csrf
+                @method('DELETE')
+                    <h2>You have enabled two factor authentication</h2>
+                    <button type="submit">Disable</button>
+                    <p>You have enabled two factor authentication, please scan the following QR code into your phones authenticator application.</p>
+                        {!! auth()->user()->twoFactorQrCodeSvg() !!}
+
+                    <h3>Recovery Codes</h3>
+                        @foreach(auth()->user()->recoveryCodes() as $code )
+                    <li>{{ $code }}</li>
+                @endforeach
+            </form>
+            @endif
         </div>
     </div>
 

@@ -11,4 +11,10 @@ class AccountController extends Controller
         $user = auth()->user();
         return view('account', ['user' => $user]);
     }
+
+    public function displayAccountSecurity()
+    {
+        $user = auth()->user();
+        return view('security', ['user' => $user]);
+    }
 }
