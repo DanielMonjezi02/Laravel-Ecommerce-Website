@@ -8,6 +8,7 @@ class AccountController extends Controller
 {  
     public function displayAccountSettings()
     {
-        return view('account');
+        $user = auth()->user();
+        return view('account', ['user' => $user]);
     }
 }

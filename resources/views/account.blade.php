@@ -2,26 +2,34 @@
 
 @section('title', 'Account Details')
 
-<div class ="account">
-    @if(! auth()->user()->two_factor_secret)
-        <p>You have not enabled 2fa</p>
-        <form method="POST" action="{{ url('user/two-factor-authentication') }}">
-        @csrf
-            <button type="submit">Enable</button>
-        </form>
-    @else
-        <form method="POST" action="{{ url('user/two-factor-authentication') }}">
-            @csrf
-            @method('DELETE')
-                <p>You have enabled 2fa</p>
-                <button type="submit">Disable</button>
-                <p>You have enabled two factor authentication, please scan the following QR code into your phones authenticator application.</p>
-                {!! auth()->user()->twoFactorQrCodeSvg() !!}
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ asset('account.css') }}" >
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="https://i.imgur.com/k5wmPtf.jpg" />
+                <h2>{{ $user->username }}</h2>
+                <a class="btn btn-primary" href="#" role="button">Account</a>
+                <a class="btn btn-primary" href="#" role="button">Security</a>
+                <a class="btn btn-primary" href="#" role="button">Orders</a>
+            </div>
+            <div class="col-md-8" style="margin: 100px auto;">
+                <h1>Personal Info</h1>
+                </h2>Username:</h2>
+                <input name="name" id="name" value="{{ $user->username }}" type="text" readonly>
+                <div class="w-100" style="margin: 20px auto;"></div>
+                </h2>Email:</h2>
+                <input name="name" id="name" value="{{ $user->email }}" type="text" readonly>
+                <div class="w-100" style="margin: 20px auto;"></div>
+                </h2>Birthday:</h2>
+                <input name="name" id="name" value="{{ $user->dob }}" type="text" readonly>
+                <div class="w-100" style="margin: 20px auto;"></div>
+            </div>
+        </div>
+    </div>
 
-                <h2>Recovery Codes</h2>
-                @foreach(auth()->user()->recoveryCodes() as $code )
-                <li>{{ $code }}</li>
-                @endforeach
-            </form>
-    @endif
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
