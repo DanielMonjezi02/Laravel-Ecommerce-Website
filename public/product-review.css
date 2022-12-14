@@ -1,24 +1,51 @@
-.rating-css div {
-    color: #ffe400;
-    font-size: 30px;
-    font-family: sans-serif;
-    font-weight: 800;
-    text-align: center;
-    text-transform: uppercase;
-    padding: 20px 0;
-  }
-  .rating-css input {
-    display: none;
-  }
-  .rating-css input + label {
-    font-size: 60px;
-    text-shadow: 1px 1px 0 #8f8420;
+.rating{
+    position: absolute;
+    display: flex;
+    transform: translate(-50%, -50%) rotateY(180deg); 
+    margin: 25px auto;
+    left: 100px;
+}
+
+.rating input{
+    display: none; 
+}
+
+.rating label
+{
+    display: block;
     cursor: pointer;
-  }
-  .rating-css input:checked + label ~ label {
-    color: #b4afaf;
-  }
-  .rating-css label:active {
-    transform: scale(0.8);
-    transition: 0.3s ease;
-  }
+    width: 50px;
+}
+
+.rating label:before
+{
+    content: '\f005';
+    font-family: fontAwesome;
+    position: relative;
+    display: block;
+    font-size: 50px;
+    color: #101010;
+}
+
+.rating label:after
+{
+    content: '\f005';
+    font-family: fontAwesome;
+    position: absolute;
+    display: block;
+    font-size: 50px;
+    color: #1f9cff;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.rating label:hover:after,
+.rating input:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+    opacity: 1;
+}
+
+

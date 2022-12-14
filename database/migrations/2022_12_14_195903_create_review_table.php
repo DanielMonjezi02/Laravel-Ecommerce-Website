@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
+use App\Models\Product;
 
 return new class extends Migration
 {
@@ -13,10 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_review', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->integer('rating');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Product::class);
             $table->timestamps();

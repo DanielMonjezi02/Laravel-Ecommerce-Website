@@ -9,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AccountController; 
 use App\Http\Controllers\MailController; 
 use App\Http\Controllers\CouponController; 
+use App\Http\Controllers\ProductReviewController; 
 
 /*s
 | Web Routes
@@ -39,10 +40,13 @@ Route::middleware([auth::class])->group(function () {
     Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
     Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])->name('orders');
     Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
-});
 
-Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
-Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
+    Route::get('/product/review/{product}', [ProductReviewController::class, 'displayProductReview'])->name('productReview');
+    Route::post('/addReview', [ProductReviewController::class, 'addReview']);
+
+    Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
+    Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');
+});
 
 
 
