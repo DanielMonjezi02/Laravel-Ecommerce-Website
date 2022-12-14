@@ -142,7 +142,7 @@ class CartController extends Controller
         $order = Order::where('session_id', $session_id)->where('status', 'unpaid')->first();
         $order->success();
 
-        return redirect()->route('cart.index')->with('alert', 'You order was successful');
+        return redirect()->route('orders')->with('alert', 'Your order ' . $order->id . ' was successful');
     
     }
 

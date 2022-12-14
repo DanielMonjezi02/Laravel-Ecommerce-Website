@@ -12,7 +12,7 @@
                 <h2>{{ $user->username }}</h2>
                 <a class="btn btn-primary" href="{{ url('/account') }}" role="button">Account</a>
                 <a class="btn btn-primary" href="{{ url('/account/security') }}" role="button">Security</a>
-                <a class="btn btn-primary" href="{{ url('/account/orders') }}" role="button">Orders</a>
+                <a class="btn btn-primary" href="{{ route('orders')) }}" role="button">Orders</a>
             </div>
             <div class="col-md-4" style="margin: 100px auto;">
                 <div class="row">

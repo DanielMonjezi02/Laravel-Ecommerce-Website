@@ -24,7 +24,7 @@ Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepa
 
 Route::get('/account', [AccountController::class, 'displayAccountSettings']);
 Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
-Route::get('/account/orders', [AccountController::class, 'displayAccountOrders']);
+Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])->name('orders');
 Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
 
 Route::get('/logout', [LoginController::class, 'logout']);

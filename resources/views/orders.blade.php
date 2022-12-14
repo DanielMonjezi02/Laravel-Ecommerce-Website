@@ -2,6 +2,12 @@
 
 @section('title', 'Orders')
 
+@if ($message = Session::get('alert'))
+    <div class="alert-success">
+        <p><u>{{ $message }}</u></p>
+    </div>
+@endif
+
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('account.css') }}" >
@@ -13,8 +19,8 @@
                 <img src="https://i.imgur.com/k5wmPtf.jpg" />
                 <h2>{{ $user->username }}</h2>
                 <a class="btn btn-primary" href="{{ url('/account') }}" role="button">Account</a>
-                <a class="btn btn-primary" href="{{ url('/account/security') }}" role="button">Security</a>
-                <a class="btn btn-primary" href="{{ url('/account/orders') }}" role="button">Orders</a>
+                <a class="btn btn-primary" href="{{ ('/account/security') }}" role="button">Security</a>
+                <a class="btn btn-primary" href="{{ route('orders') }}" role="button">Orders</a>
             </div>
             @if(count($orders) > 0)
                 <div class="col-md-4" style="margin: 100px auto;">
