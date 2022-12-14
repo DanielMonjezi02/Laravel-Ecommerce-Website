@@ -27,6 +27,7 @@ Route::get('/account', [AccountController::class, 'displayAccountSettings'])->mi
 
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');
+Route::get('/forgotPassword', [LoginController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');
 
 Route::resource('/products', ProductsController::class);
 

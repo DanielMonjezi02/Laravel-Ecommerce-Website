@@ -18,4 +18,9 @@ class LoginController extends Controller
     {
         return view('auth.two-factor-recovery-code-authentication');
     }
+
+    public function forgotPassword()
+    {
+        return view('auth.forgot-password');
+    }
 }
