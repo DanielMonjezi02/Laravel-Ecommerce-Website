@@ -26,6 +26,9 @@
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <p>Date</p>
+                        @foreach ($orders as $order)
+                            <p>{{ date('d-M-y', strtotime($order->created_at)) }}</p>
+                        @endforeach
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <p>Price</p>

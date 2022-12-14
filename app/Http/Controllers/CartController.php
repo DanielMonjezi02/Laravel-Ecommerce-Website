@@ -77,6 +77,7 @@ class CartController extends Controller
 
         // Creates an order table
         $order = new Order();
+        $order->id = fake()->numerify('######');
         $order->status = 'unpaid';
         $order->total_price = $this->getTotalCartPrice();
         $order->user()->associate(Auth::user());
