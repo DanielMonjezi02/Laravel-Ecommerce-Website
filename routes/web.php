@@ -22,11 +22,6 @@ use App\Http\Controllers\CouponController;
 
 Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 
-Route::get('/account', [AccountController::class, 'displayAccountSettings']);
-Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
-Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])->name('orders');
-Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
-
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');
 Route::get('/forgotPassword', [LoginController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');
@@ -39,6 +34,11 @@ Route::middleware([auth::class])->group(function () {
     Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.success');
     Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
     Route::resource('/cart', CartController::class); 
+
+    Route::get('/account', [AccountController::class, 'displayAccountSettings']);
+    Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
+    Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])->name('orders');
+    Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
 });
 
 Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
