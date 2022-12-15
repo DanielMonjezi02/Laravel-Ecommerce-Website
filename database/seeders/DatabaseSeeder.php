@@ -9,8 +9,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $this->call([CategorySeeder::class]); // Calling category seeder so it creates the category and products 
-        $this->call([UserSeeder::class]); // Calling user seeder to create a temporary user that can be used for testing 
+        $this->call([ProductSeeder::class]); 
+        $this->call([UserSeeder::class]); 
         $this->call([CouponSeeder::class]);
+        $this->call([OrderSeeder::class]);
+        $this->call([ReviewSeeder::class]);
     }
 }

@@ -10,6 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        User::factory()->count(1)->create(['email' => 'admin@email.com']); // Creating a single user in the database to test with 
+        User::factory()->count(1)->create(['email' => 'admin@email.com']);
+        User::factory()->count(9)->create(); // Creating a single user in the database to test with
     }
 }
