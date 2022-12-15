@@ -9,11 +9,17 @@ use App\Models\Order;
 use App\Models\Review;
 
 class ProductReviewController extends Controller
-{
-    public function displayProductReview(Product $product)
+{ 
+    public function reviewProductPage(Product $product) // Display page for user to review the product
     {
         $user = auth()->user();
-        return view('product-review', ['user' => $user, 'product' => $product]);
+        return view('product-review', ['user' => $user, 'product' => $product]); 
+    }
+
+    public function listOfProductReviewsPage(Product $product) // Displays page of all the reviews for a product 
+    {
+        $reviews = Review::where('product_id', $product->id)->get();
+        return view('products/reviews', ['reviews' => $reviews, 'product' => $product]);
     }
 
     public function addReview(Request $request)
@@ -24,33 +30,33 @@ class ProductReviewController extends Controller
         $comment = $request->input('comment');
         if($comment == NULL & $rating == null)
         {
-            return redirect()->route('productReview', $product_id)->with('alert', 'Comment cannot be blank and you must select a rating star!');
+            return redirect()->route('reviewProduct', $product_id)->with('alert', 'Comment cannot be blank and you must select a rating star!');
         }
         else if($comment == NULL)
         {
-            return redirect()->route('productReview', $product_id)->with('alert', 'You must input a comment!');
+            return redirect()->route('reviewProduct', $product_id)->with('alert', 'You must input a comment!');
         }
         else if($rating == NULL)
         {
-            return redirect()->route('productReview', $product_id)->with('alert', 'You must select a rating star');
+            return redirect()->route('reviewProduct', $product_id)->with('alert', 'You must select a rating star');
         }
 
-        $product_check = Product::where('id', $product_id)->first();
+        $product_check = Product::where('id', $product_id)->first(); // Checks if the product exists that the user is wanting to review 
         if($product_check)
         {
             $verify_order = Order::where('orders.user_id', $user_id)
                             ->join('order_items', 'orders.id', 'order_items.order_id')
-                            ->where('order_items.product_id', $product_id)->get();  // Check that a user has placed an order with the product that they are reviewing
+                            ->where('order_items.product_id', $product_id)->get();  // Checks that a user has placed an order with the product that they are reviewing
             
             if($verify_order)
             {
-                $existing_rating = Review::where('user_id', $user_id)->where('product_id', $product_id)->first();
+                $existing_rating = Review::where('user_id', $user_id)->where('product_id', $product_id)->first(); // Checks if the user has already placed an order before to know whether to update or place a new review
                 if($existing_rating)
                 {
                     $existing_rating->rating = $rating;
                     $existing_rating->comment = $comment;
                     $existing_rating->update();
-                    return redirect()->route('productReview', $product_id)->with('alert', 'Your review has been updated. Thank you!');
+                    return redirect()->route('reviewProduct', $product_id)->with('alert', 'Your review has been updated. Thank you!');
                 }
                 else
                 {
@@ -60,7 +66,7 @@ class ProductReviewController extends Controller
                     $review->user()->associate(Auth::user());
                     $review->product()->associate($product_check);
                     $review->save();
-                    return redirect()->route('productReview', $product_id)->with('alert', 'Your review has been left. Thank you!');
+                    return redirect()->route('reviewProduct', $product_id)->with('alert', 'Your review has been left. Thank you!');
                 }
             }
             else{
@@ -69,7 +75,6 @@ class ProductReviewController extends Controller
         }
         else{
             return redirect()->route('orders')->with('alert', 'Link was broken!');
-        }
-        
+        }      
     }
 }

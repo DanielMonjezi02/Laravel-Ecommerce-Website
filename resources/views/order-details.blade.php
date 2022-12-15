@@ -23,7 +23,7 @@
                         <b><u><p>Product Name</p></u></b>
                         @foreach ($orderItems as $orderItem)
                             @if($order->status == 'paid')
-                                <p>{{ucfirst($orderItem->product->name) }} - <a href="{{ url('/product/review', $orderItem->product) }}">Review Product</a></p>
+                                <p>{{ucfirst($orderItem->product->name) }} - <a href="{{ route('reviewProduct', $orderItem->product) }}">Review Product</a></p>
                             @else
                                 <p>{{ucfirst($orderItem->product->name) }}</p>
                             @endif

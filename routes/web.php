@@ -28,6 +28,7 @@ Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('r
 Route::get('/forgotPassword', [LoginController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');
 
 Route::resource('/products', ProductsController::class);
+Route::post('/productReviews/{product}', [ProductReviewController::class, 'listOfProductReviewsPage'])->name('productReviews'); // Directs page to list of reviews for a product
 
 Route::middleware([auth::class])->group(function () {
     Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
@@ -39,9 +40,9 @@ Route::middleware([auth::class])->group(function () {
     Route::get('/account', [AccountController::class, 'displayAccountSettings']);
     Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
     Route::get('/account/orders', [AccountController::class, 'displayAccountOrders'])->name('orders');
-    Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails');
+    Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails'); 
 
-    Route::get('/product/review/{product}', [ProductReviewController::class, 'displayProductReview'])->name('productReview');
+    Route::get('/product/review/{product}', [ProductReviewController::class, 'reviewProductPage'])->name('reviewProduct'); // Directs page to review a product
     Route::post('/addReview', [ProductReviewController::class, 'addReview']);
 
     Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
