@@ -33,8 +33,8 @@ Route::post('/productReviews/{product}', [ProductReviewController::class, 'listO
 Route::middleware([auth::class])->group(function () {
     Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
-    Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.success');
-    Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel');
+    Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.success'); // If the order during checkout was placed successfully 
+    Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel'); // If the order during checkout was cancelled by clicking the back button 
     Route::resource('/cart', CartController::class); 
 
     Route::get('/account', [AccountController::class, 'displayAccountSettings']);
@@ -43,7 +43,7 @@ Route::middleware([auth::class])->group(function () {
     Route::get('/account/orders/{order}', [AccountController::class, 'displayOrderDetails'])->name('orderDetails'); 
 
     Route::get('/product/review/{product}', [ProductReviewController::class, 'reviewProductPage'])->name('reviewProduct'); // Directs page to review a product
-    Route::post('/addReview', [ProductReviewController::class, 'addReview']);
+    Route::post('/addReview', [ProductReviewController::class, 'addReview']); // Adds the review of a product
 
     Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
     Route::delete('/coupon', [CouponController::class, 'destroy'])->name('coupon.destroy');

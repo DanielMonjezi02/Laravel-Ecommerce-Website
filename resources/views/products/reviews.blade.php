@@ -7,7 +7,7 @@
         <article>
             <h3><u>Rating: {{ $review->rating }}/5</u></h3>
             <p>{{ $review->comment }}</p>
-            @if (Auth::user()->id == $review->user_id)
+            @if (Auth::user() != NULL & (Auth::user() == $review->user))
                 <form action="{{ route('reviewProduct', $product) }}">
                     <button>Edit Your Review<button>
                 </form>
