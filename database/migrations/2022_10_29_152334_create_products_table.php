@@ -20,7 +20,6 @@ return new class extends Migration
             $table->decimal('price', 6, 2);
             $table->integer('quantity');
             $table->text('description');
-            $table->foreignIdFor(Category::class);
             $table->timestamps();
 
         });
