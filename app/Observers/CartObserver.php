@@ -16,10 +16,12 @@ class CartObserver
      */
     public function created(Cart $cart)
     {
-        $couponName = session()->get('coupon')['name'];
+        $couponName = session()->get('coupon'); // Checks if there is a coupon in the session
 
-        if($couponName != NULL)
+        if($couponName != NULL) 
         {
+            // If there is a coupon
+            $couponName = session()->get('coupon')['name']; 
             $coupon = Coupon::where('code', $couponName)->first();
 
             session()->put('coupon', [
@@ -37,10 +39,11 @@ class CartObserver
      */
     public function updated(Cart $cart)
     {
-        $couponName = session()->get('coupon')['name'];
+        $couponName = session()->get('coupon');
 
-        if($couponName != NULL)
+        if($couponName != NULL) 
         {
+            $couponName = session()->get('coupon')['name']; 
             $coupon = Coupon::where('code', $couponName)->first();
 
             session()->put('coupon', [
@@ -58,10 +61,11 @@ class CartObserver
      */
     public function deleted(Cart $cart)
     {
-        $couponName = session()->get('coupon')['name'];
+        $couponName = session()->get('coupon');
 
-        if($couponName != NULL)
+        if($couponName != NULL) 
         {
+            $couponName = session()->get('coupon')['name']; 
             $coupon = Coupon::where('code', $couponName)->first();
 
             session()->put('coupon', [
