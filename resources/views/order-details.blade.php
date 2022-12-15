@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Order Details')
+
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ asset('account.css') }}" >
@@ -12,7 +14,7 @@
                 <h2>{{ $user->username }}</h2>
                 <a class="btn btn-primary" href="{{ url('/account') }}" role="button">Account</a>
                 <a class="btn btn-primary" href="{{ url('/account/security') }}" role="button">Security</a>
-                <a class="btn btn-primary" href="{{ route('orders')) }}" role="button">Orders</a>
+                <a class="btn btn-primary" href="{{ route('orders') }}" role="button">Orders</a>
             </div>
             <div class="col-md-4" style="margin: 100px auto;">
                 <div class="row">
@@ -21,7 +23,7 @@
                         <b><u><p>Product Name</p></u></b>
                         @foreach ($orderItems as $orderItem)
                             @if($order->status == 'paid')
-                                <p>{{ucfirst($orderItem->product->name) }} - Review Product</p>
+                                <p>{{ucfirst($orderItem->product->name) }} - <a href="{{ route('reviewProduct', $orderItem->product) }}">Review Product</a></p>
                             @else
                                 <p>{{ucfirst($orderItem->product->name) }}</p>
                             @endif

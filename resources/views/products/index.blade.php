@@ -8,8 +8,6 @@
     </div>
 @endif
 
-
-
 @foreach ($products as $product)
     <div class ="productList">
         <article>
@@ -27,6 +25,10 @@
                         <option value="5">5</option>
                     </select></p>
                     <button type="submit" class="btn btn-blue">Add to cart</button>
+                </form>
+                <form action="{{ route('productReviews', $product->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-blue">Reviews</button>
                 </form>
         </article>
     </div>

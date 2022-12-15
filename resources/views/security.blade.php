@@ -36,8 +36,9 @@
                         @foreach(auth()->user()->recoveryCodes() as $code )
                     <li>{{ $code }}</li>
                 @endforeach
-            </form>
+                </form>
             @endif
+            </div>
         </div>
     </div>
 
