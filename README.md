@@ -251,6 +251,7 @@ There are multiple test cases that have been implemented. You may run the follow
 - To run tests for the *signup page*, enter the `php artisan test --filter SignupPageTest`
 - To run tests for the *product page*, enter the `php artisan test --filter ProductPageTest`
 - To run tests for the *reset password system*, enter the `php artisan test --filter ResetPasswordTest`
+- To run tests for the *reset password system*, enter the `php artisan test --filter ReviewTest`
 
 
 **All tests should return as passed.** If any tests do fail, please refer to the [getting started](#getting-started) section to ensure you have installed the project correctly. 
