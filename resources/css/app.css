@@ -78,14 +78,26 @@
 
 .productName
 {
+    margin: 10px;
     text-transform: capitalize;
 }
+
 
 .productName a
 {
     text-decoration: none;
 }
 
+.account button
+{
+    width: 100px;
+    height: 100px;
+}
+
+.cartList
+{
+    margin: 55px auto;
+}
 
 
 

@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class);
+            $table->integer('quantity');
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
