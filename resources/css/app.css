@@ -78,8 +78,10 @@
 
 .productName
 {
+    margin: 10px;
     text-transform: capitalize;
 }
+
 
 .productName a
 {
@@ -90,6 +92,11 @@
 {
     width: 100px;
     height: 100px;
+}
+
+.cartList
+{
+    margin: 55px auto;
 }
 
 
