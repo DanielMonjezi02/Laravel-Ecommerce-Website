@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Coupon;
 use App\Mail\BirthdayMail;
@@ -31,17 +32,11 @@ class BirthdayEmail extends Command
      */
     public function handle()
     {
-        $today=now();
-
-        $users = User::whereMonth('dob', $today->month)->WhereDay('dob', $today->day)->get(); // Gets all the users that have their birthday today 
+        $users = User::whereMonth('dob', Carbon::now()->month)->WhereDay('dob', Carbon::now()->day)->get(); // Gets all the users that have their birthday today
 
         foreach($users as $user)
         {
-            $coupon = new Coupon();
-            $coupon->code = strtoupper(fake()->bothify('???###')); // Generates an all upper case code with 3 letters and 3 numbers
-            $coupon->type = 'fixed';
-            $coupon->value = 3;
-            $coupon->save();
+            $coupon = $coupon = Coupon::factory()->create(['type' => 'fixed', 'value' => 3]);
 
             $this->sendMailToUser($user, $coupon);
 
