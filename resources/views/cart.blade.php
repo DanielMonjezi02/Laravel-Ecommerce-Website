@@ -12,8 +12,6 @@
 
 @if(count($carts) > 0)
     @foreach ($carts as $cart)
-        <div class ="productList">
-            <article>
             @if (Auth::user() && Auth::user()->id === $cart->user_id)
                 <h3 class="productName"><u>{{ $cart->product->name }}</u> £{{ (($cart->product->price)*($cart->quantity)) }}</h3>
                 <p class="cartQuantity">Quantity: {{ $cart->quantity }}</p>
@@ -21,11 +19,9 @@
                     <button><a style="text-decoration:none" href="{{ route('cart.show', $cart->id) }}">Show</a></button>
                     @csrf
                     @method('DELETE')
-                        <button type="submit" class="btn btn-red">Delete</button>
+                    <button type="submit" class="btn btn-red">Delete</button>
                 </form>
             @endif
-            </article>
-        </div>
     @endforeach
     <h2 class="cartTotal">Cart Total: £{{ CartController::getTotalCartPrice() }} </h2>
     <form action="{{route('checkout')}}" method="POST">

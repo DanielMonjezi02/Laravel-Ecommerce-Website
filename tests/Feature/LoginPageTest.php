@@ -6,8 +6,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
-use Laravel\Dusk\Chrome;
-use Tests\DuskTestCase;
 use App\Models\User;
 
 class LoginPageTest extends TestCase
@@ -58,6 +56,8 @@ class LoginPageTest extends TestCase
         $response->assertInValid([
             'email' => 'These credentials do not match our records',
         ]);    
+
+        $this->assertGuest(); // Ensures that they aren't authenticated
     }
 
     public function test_user_enters_all_empty_input_then_it_returns_error_when_logging_in()
@@ -78,6 +78,8 @@ class LoginPageTest extends TestCase
             'email' => 'The email field is required',
             'password' => 'The password field is required',
         ]);  
+
+        $this->assertGuest();
     }
 
     public function test_user_enters_empty_password_input_then_it_returns_error_when_logging_in()
@@ -97,6 +99,8 @@ class LoginPageTest extends TestCase
         $response->assertInValid([
             'password' => 'The password field is required',
         ]);
+
+        $this->assertGuest();
     }
 
     public function test_user_enters_empty_email_input_then_it_returns_error_when_logging_in()
@@ -116,6 +120,8 @@ class LoginPageTest extends TestCase
         $response->assertInValid([
             'email' => 'The email field is required',
         ]);
+
+        $this->assertGuest();
     }
 
     public function test_user_can_see_forgot_password_option_in_login_form()

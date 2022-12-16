@@ -8,9 +8,17 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stripe\StripeClient;
 
 class CartController extends Controller
 {
+
+    protected $stripe;
+
+    public function __construct(StripeClient $stripe)
+    {
+        $this->stripe = $stripe;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +26,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::orderBy('id', 'desc')->paginate(20);
+        $user_id = Auth::id();
+        $carts = Cart::where('user_id', $user_id)->get();
         return view('cart', ['carts' => $carts]);
     }
 
@@ -67,13 +76,22 @@ class CartController extends Controller
             $coupon_amount = session()->get('coupon')['discount'];
             $totalCartPrice = $totalCartPrice - $coupon_amount;
         }
+
+        if($totalCartPrice < 0)
+        {
+            $totalCartPrice = 0;
+        }
         return $totalCartPrice;
     }
 
     public function checkout()
     {
+        if($this->getTotalCartPrice() == 0) // Ensures that the cart total price has to be higher than £0 and a free order can't be placed as stripe accepts a minimum charge of 0.50 GBP
+        {
+            return redirect()->route('cart.index')->with('alert', 'Your cart cant be equal to £0. Please ensure your cart total is above £0'); 
+        }
         $user_id = Auth::id();
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+        $stripe = $this->stripe;
 
         // Creates an order table
         $order = new Order();
@@ -109,26 +127,23 @@ class CartController extends Controller
             $orderItem->save();
         }
 
+        $sessionData = ([
+            'line_items' => $listOfProducts,
+            'mode' => 'payment',
+            'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+            'cancel_url' => route('checkout.cancel', [], true)."?session_id={CHECKOUT_SESSION_ID}",
+        ]);
 
-        if(!session()->get('coupon')) // Checks if the user has a coupon applied to cart
-        {
-            $checkout_session = $stripe->checkout->sessions->create([
-                'line_items' => $listOfProducts,
-                'mode' => 'payment',
-                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => route('checkout.cancel', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-            ]);
-        } else {    
-            $checkout_session = $stripe->checkout->sessions->create([
-                'line_items' => $listOfProducts,
-                'mode' => 'payment',
-                'discounts' => [[
-                    'coupon' => session()->get('coupon')['name'],
-                ]],
-                'success_url' => route('checkout.success', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => route('checkout.cancel', [], true)."?session_id={CHECKOUT_SESSION_ID}",
-            ]);
+        // Conditionally add coupon if it exists in session
+        if ($coupon = session('coupon.name')) {
+            $sessionData['discounts'] = [
+                [
+                    'coupon' => $coupon,
+                ],
+            ];
         }
+
+        $checkout_session = $stripe->checkout->sessions->create($sessionData);
 
         $order->session_id = $checkout_session->id;
         $order->save();
@@ -143,7 +158,6 @@ class CartController extends Controller
         $order->success();
 
         return redirect()->route('orders')->with('alert', 'Your order ' . $order->id . ' was successful');
-    
     }
 
     public function cancelOrder(Request $request)
