@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Stripe\StripeClient;
 
 class CartController extends Controller

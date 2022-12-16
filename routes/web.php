@@ -21,13 +21,13 @@ use App\Http\Controllers\ProductReviewController;
 |
 */
 
-Route::get('/home', [WelcomeController::class, 'homepageDisplay'])->name('homepage');
 
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/recoveryLogin', [LoginController::class, 'recoveryLogin'])->name('recoveryLogin')->middleware('guest');
 Route::get('/forgotPassword', [LoginController::class, 'forgotPassword'])->name('forgotPassword')->middleware('guest');
 
 Route::resource('/products', ProductsController::class);
+Route::get('/home', [ProductsController::class, 'index']);
 Route::post('/productReviews/{product}', [ProductReviewController::class, 'listOfProductReviewsPage'])->name('productReviews'); // Directs page to list of reviews for a product
 
 Route::middleware([auth::class])->group(function () {
