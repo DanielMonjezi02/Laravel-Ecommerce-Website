@@ -52,6 +52,24 @@ class CartPageTest extends TestCase
         }
     }
 
+    public function test_cart_total_price_displays_correctly()
+    {
+        $user = User::factory()->create();
+        $carts = Cart::factory()->count(4)->create(['user_id' => $user->id]);
+
+        $this->actingAs($user);
+
+        $totalPriceCarts = 0;
+        foreach($carts as $cart)
+        {
+            $totalPriceCarts = ($totalPriceCarts + ($cart->product->price*$cart->quantity));
+        }
+
+        $cartPrice = CartController::getTotalCartPrice();
+
+        $this->assertEquals($totalPriceCarts, CartController::getTotalCartPrice());
+    }
+
     public function test_if_cart_empty_checkout_button_does_not_display()
     {
         $user = User::factory()->create();
@@ -83,16 +101,19 @@ class CartPageTest extends TestCase
     public function test_cart_total_price_updates_upon_removing_a_product()
     {
         $user = User::factory()->create();
-        $cart = new Cart();
         $product = Product::factory()->create();
-        $cart = Cart::factory()->create(['product_id' => $product->id, 'user_id' => $user->id]);
+        $carts = Cart::factory()->create(['product_id' => $product->id, 'user_id' => $user->id]);
 
         $this->actingAs($user);
 
+        // Check the price within of the product*quantity in cart table should be displayed at the cart total price 
         $this->assertEquals(($product->price*$cart->quantity), CartController::getTotalCartPrice());
 
+        // Delete cart
         $this->delete(route('cart.destroy', $cart));
 
+        // Cart empty, total should be 0
         $this->assertEquals(0, CartController::getTotalCartPrice());
     }
+  
 }

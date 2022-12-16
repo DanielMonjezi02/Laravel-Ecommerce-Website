@@ -68,6 +68,11 @@ class CartController extends Controller
             $coupon_amount = session()->get('coupon')['discount'];
             $totalCartPrice = $totalCartPrice - $coupon_amount;
         }
+
+        if($totalCartPrice < 0)
+        {
+            $totalCartPrice = 0;
+        }
         return $totalCartPrice;
     }
 
