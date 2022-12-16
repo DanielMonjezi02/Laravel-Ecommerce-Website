@@ -6,8 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
-use Laravel\Dusk\Chrome;
 use Tests\DuskTestCase;
+use Laravel\Dusk\Chrome;
 use App\Models\User;
 
 class LoginPageTest extends TestCase
