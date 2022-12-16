@@ -24,7 +24,7 @@ class ProductPageTest extends TestCase
         $response->assertSeeText('Reviews');
     }
 
-    public function test_all_products_are_displayed_on_page()
+    public function test_all_product_names_are_displayed()
     {
         $products = Product::all();
 
@@ -33,6 +33,18 @@ class ProductPageTest extends TestCase
         foreach($products as $product)
         {
             $response->assertSee($product->name);
+        }
+    }
+
+    public function test_all_product_prices_are_displayed()
+    {
+        $products = Product::all();
+
+        $response = $this->get('/products');
+
+        foreach($products as $product)
+        {
+            $response->assertSee($product->price);
         }
     }
 
@@ -52,4 +64,6 @@ class ProductPageTest extends TestCase
         $this->followRedirects($response)->assertSee('Added product to cart');
         
     }
+
+    // Test user not logged in, clicks add product to cart and is displayed to login
 }

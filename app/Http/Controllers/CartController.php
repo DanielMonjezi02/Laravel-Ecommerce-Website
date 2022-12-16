@@ -18,7 +18,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $carts = Cart::orderBy('id', 'desc')->paginate(20);
+        $user_id = Auth::id();
+        $carts = Cart::where('user_id', $user_id)->get();
         return view('cart', ['carts' => $carts]);
     }
 

@@ -32,10 +32,11 @@ Route::post('/productReviews/{product}', [ProductReviewController::class, 'listO
 
 Route::middleware([auth::class])->group(function () {
     Route::post('/cart/add/{product}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
+    Route::resource('/cart', CartController::class); 
+    
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::get('/success', [CartController::class, 'successOrder'])->name('checkout.success'); // If the order during checkout was placed successfully 
     Route::get('/cancel', [CartController::class, 'cancelOrder'])->name('checkout.cancel'); // If the order during checkout was cancelled by clicking the back button 
-    Route::resource('/cart', CartController::class); 
 
     Route::get('/account', [AccountController::class, 'displayAccountSettings']);
     Route::get('/account/security', [AccountController::class, 'displayAccountSecurity'])->middleware('password.confirm');
