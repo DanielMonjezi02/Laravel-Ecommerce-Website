@@ -26,7 +26,6 @@ class ResetPasswordTest extends TestCase
 
     public function test_reset_password_link_gets_sent_to_email_upon_request()
     {
-        Notification::fake();
 
         $user = User::factory()->create();
 

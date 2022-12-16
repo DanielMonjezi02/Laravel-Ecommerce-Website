@@ -102,7 +102,7 @@ class CartPageTest extends TestCase
     {
         $user = User::factory()->create();
         $product = Product::factory()->create();
-        $carts = Cart::factory()->create(['product_id' => $product->id, 'user_id' => $user->id]);
+        $cart = Cart::factory()->create(['product_id' => $product->id, 'user_id' => $user->id]);
 
         $this->actingAs($user);
 
