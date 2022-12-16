@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->decimal('price', 6, 2);
-            $table->integer('quantity');
             $table->text('description');
             $table->timestamps();
 
