@@ -162,8 +162,11 @@ These coupons can be applied to the cart as long as you have added a product to 
 your cart price will be reduced based on the coupon as well as the coupon name being displayed (example below). On the other hand, if you input an invalid coupon, you will receive an error message that is displayed. 
 
 _Coupon Applied:_
+
 ![](https://i.imgur.com/MJxqAsa.png)
+
 _Without Coupon Applied:_
+
 ![](https://i.imgur.com/5B24azq.png)
 
 ### 3. Checkout System
@@ -208,6 +211,7 @@ always be displayed here unless you choose to disable two factor authentication.
 In the case that a user may no longer have access to their authenticator applicator, they can log into their account using the recovery codes that 
 was presented to them in the account->security page. The recovery code option will be presented to the user when they have entered their login details and are on the page where
 they have to enter their two factor code as shown:
+
 ![](https://i.imgur.com/x9BvsBT.png)
 
 ### 5. Product Review
@@ -261,7 +265,8 @@ During development, one of the features that needed to be implemented into the p
 
 With the use of Laravel fortify, all the methods and controllers are included with the package. For example, logging in, registering and two-factor authentication are routes that are already pre-defined and therefore, you don’t need to define them in your routes.php. This is very helpful and useful as its time-efficient, something that is vital during project development. 
 
-Without the use of Laravel fortify, creating controllers and methods for all these features would be extremely time-consuming and will result in way more testing that will need to be performed to ensure everything is working as intended. It is also likely that, during development, more errors will arise that will need to be resolved than simply using Laravel fortify which is something that has been used by thousands of people and is extensively tested to ensure all the features that it can do, works as intended. 
+
+the use of Laravel fortify, creating controllers and methods for all these features would be extremely time-consuming and will result in way more testing that will need to be performed to ensure everything is working as intended. It is also likely that, during development, more errors will arise that will need to be resolved than simply using Laravel fortify which is something that has been used by thousands of people and is extensively tested to ensure all the features that it can do, works as intended. 
 
 Furthermore, Laravel fortify requires tokens to be passed during reset password and enabling two factor authentication. This means that throughout the whole process, it is validating that the user matches with the user that is requesting the methods which greatly enhances the security of the project to ensure anyone on the outside can not manipulate the code and reset someone’s password or enable 2FA for someone which they didn’t request for. 
 
