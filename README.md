@@ -10,7 +10,7 @@
 * [References](#references)
 
 
-# About Project
+## About Project
 
 This project is based on a basic shopping website which has been created with the use of HTML, Laravel and CRUD operations. The website contains the following functions:
 
@@ -127,7 +127,7 @@ This part is optional and not required. A stripe API key has already been includ
 2. [Locate API key](https://support.stripe.com/questions/locate-api-keys-in-the-dashboard?locale=en-GB#:~:text=Locate%20API%20keys%20in%20the%20Dashboard%20%3A%20Stripe%3A%20Help%20%26%20Support&text=Users%20with%20Administrator%20permissions%20can,and%20clicking%20on%20API%20Keys.)
 
 ## How To Use
-This section will explain how to most features that been implemented into the website. 
+This section will explain how to use most of the features that have been implemented into the website. 
 1. [Forgot Password](#forgot-password)
 2. [Coupon System](#coupon-system)
 3. [Checkout System](#checkout-system)
