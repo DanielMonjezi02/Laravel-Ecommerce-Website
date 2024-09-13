@@ -4,7 +4,6 @@
 * [About Project](#about-project)
 * [Getting Started](#getting-started)
 * [How To Use](#how-to-use)
-* [Known Issues](#known-issues)
 * [Test Cases](#test-cases)
 * [Development Analysis](#develop-analysis)
 * [References](#references)
